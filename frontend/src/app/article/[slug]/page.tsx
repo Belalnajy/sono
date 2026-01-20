@@ -42,7 +42,7 @@ function calculateReadingTime(content: string): number {
 
 // Extract headings for TOC
 function extractHeadings(
-  content: string
+  content: string,
 ): { id: string; text: string; level: number }[] {
   const headingRegex = /<h([2-3])[^>]*>(.*?)<\/h\1>/gi;
   const headings: { id: string; text: string; level: number }[] = [];
@@ -66,7 +66,7 @@ function addHeadingIds(content: string): string {
     (match, level, attrs, text) => {
       const id = `heading-${index++}`;
       return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
-    }
+    },
   );
 }
 
@@ -87,7 +87,7 @@ function TableOfContents({
           }
         });
       },
-      { rootMargin: '-100px 0px -66%' }
+      { rootMargin: '-100px 0px -66%' },
     );
 
     headings.forEach(({ id }) => {
@@ -251,14 +251,6 @@ export default function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Move progress bar below fixed header */}
-      <div className="fixed top-[132px] left-0 right-0 h-1.5 bg-white/5 z-[60]">
-        <div
-          className="h-full bg-gradient-to-r from-gold-500 to-gold-600 transition-all duration-150 shadow-glow-gold"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
       {/* Featured Header - Cinematic Navy & Gold transition */}
       {article.thumbnail_url && (
         <div className="relative h-[70vh] min-h-[500px] w-full group overflow-hidden">
@@ -303,7 +295,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
-                        }
+                        },
                       )}
                     </span>
                   </div>
