@@ -1,0 +1,41 @@
+module.exports = {
+  apps: [
+    {
+      name: 'news-backend',
+      cwd: '/var/www/news-website/backend',
+      script: 'dist/main.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000,
+      },
+      error_file: '/var/www/news-website/logs/backend-error.log',
+      out_file: '/var/www/news-website/logs/backend-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+    },
+    {
+      name: 'news-frontend',
+      cwd: '/var/www/news-website/frontend',
+      script: 'node_modules/next/dist/bin/next',
+      args: 'start -p 3001',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3001,
+      },
+      error_file: '/var/www/news-website/logs/frontend-error.log',
+      out_file: '/var/www/news-website/logs/frontend-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+    },
+  ],
+};
