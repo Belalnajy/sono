@@ -134,7 +134,7 @@ sudo -u postgres psql
 
 # In PostgreSQL prompt, run:
 CREATE DATABASE news_db;
-CREATE USER news_user WITH ENCRYPTED PASSWORD 'YOUR_SECURE_PASSWORD';
+CREATE USER news_user WITH ENCRYPTED PASSWORD 'SecretPassword123';
 GRANT ALL PRIVILEGES ON DATABASE news_db TO news_user;
 \q
 ```
@@ -148,7 +148,7 @@ sudo chown $USER:$USER /var/www/news-website
 cd /var/www/news-website
 
 # Clone repository
-git clone git@github.com:YOUR_USERNAME/news-website.git .
+git clone git@github.com:Belalnajy/sono.git .
 
 # Create logs directory
 mkdir -p logs
@@ -182,7 +182,7 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-FRONTEND_URL=https://yourdomain.com
+FRONTEND_URL=https://sonomedix.cloud
 ```
 
 ### Frontend Environment
@@ -196,7 +196,7 @@ nano .env.local
 Update with your domain:
 
 ```env
-NEXT_PUBLIC_API_URL=https://yourdomain.com/api
+NEXT_PUBLIC_API_URL=https://sonomedix.cloud/api
 ```
 
 ## Step 7: Install Dependencies and Build
@@ -253,7 +253,7 @@ Add the following configuration:
 ```nginx
 server {
     listen 80;
-    server_name yourdomain.com www.yourdomain.com;
+    server_name sonomedix.cloud www.sonomedix.cloud;
 
     # Backend API
     location /api {
@@ -296,7 +296,7 @@ sudo systemctl restart nginx
 sudo apt install certbot python3-certbot-nginx -y
 
 # Obtain SSL certificate
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d sonomedix.cloud -d www.sonomedix.cloud
 
 # Test auto-renewal
 sudo certbot renew --dry-run
@@ -315,15 +315,15 @@ pm2 logs --lines 50
 
 ```bash
 # Test backend
-curl https://yourdomain.com/api/categories
+curl https://sonomedix.cloud/api/categories
 
 # Test frontend
-curl -I https://yourdomain.com
+curl -I https://sonomedix.cloud
 ```
 
 ### Access in browser
 
-Visit `https://yourdomain.com` and verify:
+Visit `https://sonomedix.cloud` and verify:
 
 - [ ] Homepage loads correctly
 - [ ] Articles are displayed
