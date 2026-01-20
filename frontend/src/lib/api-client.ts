@@ -15,7 +15,9 @@ class ApiClient {
     endpoint: string,
     options: RequestInit = {},
   ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
+    const isServer = typeof window === 'undefined';
+    const baseUrl = isServer ? INTERNAL_API_URL : this.baseURL;
+    const url = `${baseUrl}${endpoint}`;
     const token =
       typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
