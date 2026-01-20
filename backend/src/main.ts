@@ -32,32 +32,31 @@ export async function bootstrap() {
   return cachedApp;
 }
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  const startLocal = async () => {
-    const app = await NestFactory.create(AppModule);
+// Start server for both development and production
+const startServer = async () => {
+  const app = await NestFactory.create(AppModule);
 
-    app.enableCors({
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-      credentials: true,
-    });
+  app.enableCors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  });
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-      }),
-    );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
-    app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api');
 
-    const port = process.env.PORT || 3000;
-    await app.listen(port);
-    console.log(`Application is running on: http://localhost:${port}/api`);
-  };
-  startLocal();
-}
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}/api`);
+};
+
+startServer();
 
 // Export for Vercel
 export default async (req: any, res: any) => {
