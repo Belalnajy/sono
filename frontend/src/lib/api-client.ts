@@ -1,5 +1,8 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+
+// Internal URL for SSR fetching on the server
+const INTERNAL_API_URL = 'http://127.0.0.1:3000/api';
 
 class ApiClient {
   private baseURL: string;
@@ -10,7 +13,7 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const token =
@@ -35,7 +38,7 @@ class ApiClient {
         .json()
         .catch(() => ({ message: 'An error occurred' }));
       throw new Error(
-        error.message || `HTTP error! status: ${response.status}`
+        error.message || `HTTP error! status: ${response.status}`,
       );
     }
 
@@ -152,7 +155,7 @@ class ApiClient {
 
   async updateSubcategory(
     id: string,
-    data: { name?: string; slug?: string; categoryId?: string }
+    data: { name?: string; slug?: string; categoryId?: string },
   ) {
     return this.request(`/subcategories/${id}`, {
       method: 'PATCH',
