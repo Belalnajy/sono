@@ -37,14 +37,14 @@ export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-soft-tint">
       {/* Hero Section - Deep Navy Premium Design */}
-      <section className="relative pt-40 pb-32 overflow-hidden bg-[#0b121e]">
+      <section className="hero-section relative pt-40 pb-32 overflow-hidden bg-[#0b121e]">
         {/* Architectural Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1e293b,transparent_40%)]"></div>
-        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
+        <div className="hero-overlay absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1e293b,transparent_40%)]"></div>
+        <div className="hero-overlay absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
 
         {/* Animated Orbs */}
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-skyblue-500/10 rounded-full blur-[100px] -z-10"></div>
+        <div className="hero-orb absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+        <div className="hero-orb absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-skyblue-500/10 rounded-full blur-[100px] -z-10"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection variant="fadeDown">

@@ -68,13 +68,13 @@ export default async function AllArticlesPage({
   return (
     <div className="min-h-screen">
       {/* Hero Header - Deep Navy Premium Design */}
-      <section className="relative pt-40 pb-24 overflow-hidden bg-[#0b121e]">
+      <section className="hero-section relative pt-40 pb-24 overflow-hidden bg-[#0b121e]">
         {/* Architectural Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1e293b,transparent_40%)]"></div>
-        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
+        <div className="hero-overlay absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1e293b,transparent_40%)]"></div>
+        <div className="hero-overlay absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
 
         {/* Animated Orbs */}
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-gold-500/10 rounded-full blur-[100px] -z-10 animate-pulse"></div>
+        <div className="hero-orb absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-gold-500/10 rounded-full blur-[100px] -z-10 animate-pulse"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection variant="fadeDown">

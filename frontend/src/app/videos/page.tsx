@@ -15,7 +15,7 @@ async function getVideos() {
 
 function getYouTubeEmbedUrl(url: string) {
   const videoId = url.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/,
   )?.[1];
   return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
 }
@@ -26,14 +26,14 @@ export default async function VideosPage() {
   return (
     <div className="min-h-screen bg-soft-tint">
       {/* Hero Section - Cinematic Navy */}
-      <section className="relative pt-40 pb-24 overflow-hidden bg-[#0b121e]">
+      <section className="hero-section relative pt-40 pb-24 overflow-hidden bg-[#0b121e]">
         {/* Architectural Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#1e293b,transparent_50%)]"></div>
-        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
+        <div className="hero-overlay absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#1e293b,transparent_50%)]"></div>
+        <div className="hero-overlay absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
 
         {/* Floating Orbs */}
-        <div className="absolute top-10 right-10 w-96 h-96 bg-gold-500/10 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-64 h-64 bg-skyblue-500/10 rounded-full blur-[100px]"></div>
+        <div className="hero-orb absolute top-10 right-10 w-96 h-96 bg-gold-500/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="hero-orb absolute bottom-10 left-10 w-64 h-64 bg-skyblue-500/10 rounded-full blur-[100px]"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl">

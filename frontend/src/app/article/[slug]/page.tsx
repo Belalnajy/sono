@@ -21,7 +21,9 @@ import {
   Bookmark,
   Linkedin,
   ArrowLeft,
+  Search,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import ImageGallery from '@/components/articles/ImageGallery';
 import ArticleCard from '@/components/ui/ArticleCard';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -139,9 +141,22 @@ function TableOfContents({
 }
 
 // Share functionality
-function shareArticle(platform: string, url: string, title: string) {
+async function shareArticle(platform: string, url: string, title: string) {
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
+
+  // Use Web Share API if available and platform is 'generic'
+  if (platform === 'share' && navigator.share) {
+    try {
+      await navigator.share({
+        title: title,
+        url: url,
+      });
+      return;
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  }
 
   const shareUrls: Record<string, string> = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
@@ -185,6 +200,16 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   >([]);
   const [readingTime, setReadingTime] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [latestArticles, setLatestArticles] = useState<Article[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/articles?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   useEffect(() => {
     const updateProgress = () => {
@@ -226,6 +251,13 @@ export default function ArticlePage({ params }: ArticlePageProps) {
             .slice(0, 3);
           setRelatedArticles(filtered);
         }
+
+        // Fetch latest articles for sidebar
+        const latestResponse = await apiClient.getArticles({
+          status: 'published',
+          limit: 3,
+        });
+        setLatestArticles(latestResponse.articles);
       } catch (error) {
         console.error('Failed to load article', error);
       } finally {
@@ -313,7 +345,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       )}
 
       <div className="container mx-auto px-4 -mt-10 relative z-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-8xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Share Sidebar (Desktop) - Enhanced Premium Look */}
             <div className="hidden lg:block col-span-1">
@@ -386,13 +418,25 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                   </div>
 
                   <div className="lg:hidden flex gap-4">
-                    <button className="p-3 bg-gray-50 rounded-full text-navy-900">
+                    <button
+                      onClick={() =>
+                        shareArticle('facebook', currentUrl, article.title)
+                      }
+                      className="p-3 bg-gray-50 rounded-full text-navy-900 active:scale-95 transition-transform">
                       <Facebook className="w-5 h-5" />
                     </button>
-                    <button className="p-3 bg-gray-50 rounded-full text-navy-900">
+                    <button
+                      onClick={() =>
+                        shareArticle('twitter', currentUrl, article.title)
+                      }
+                      className="p-3 bg-gray-50 rounded-full text-navy-900 active:scale-95 transition-transform">
                       <Twitter className="w-5 h-5" />
                     </button>
-                    <button className="p-3 bg-gray-50 rounded-full text-navy-900">
+                    <button
+                      onClick={() =>
+                        shareArticle('share', currentUrl, article.title)
+                      }
+                      className="p-3 bg-gray-50 rounded-full text-navy-900 active:scale-95 transition-transform">
                       <Share2 className="w-5 h-5" />
                     </button>
                   </div>
@@ -420,25 +464,64 @@ export default function ArticlePage({ params }: ArticlePageProps) {
               <div className="sticky top-40 space-y-8">
                 <TableOfContents headings={headings} />
 
-                <div className="bg-navy-900 rounded-[2rem] p-8 text-white relative overflow-hidden group shadow-2xl">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-gold-500/20 transition-all duration-500"></div>
-                  <h4 className="headline-arabic text-xl font-black mb-4 relative z-10">
-                    نشرة سونو الطبية
+                {/* Search Widget */}
+                <div className="bg-white rounded-[2rem] p-8 shadow-premium border border-gray-100">
+                  <h4 className="headline-arabic text-xl font-black mb-6 text-navy-900 border-r-4 border-gold-500 pr-4">
+                    بحث في <span className="text-gold-500">المقال</span>
                   </h4>
-                  <p className="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed font-medium">
-                    اشترك لتصلك أحدث الأبحاث والدراسات الطبية الموثوقة مباشرة
-                    إلى بريدك
-                  </p>
-                  <form className="relative z-10 group/form">
+                  <form onSubmit={handleSearch} className="relative">
                     <input
-                      type="email"
-                      placeholder="بريدك الإلكتروني"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500 transition-all mb-3 text-white placeholder-gray-500"
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="ابحث عن مقال..."
+                      className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500 transition-all font-medium text-navy-900 pr-12"
                     />
-                    <button className="w-full bg-gold-500 hover:bg-white text-navy-900 font-black py-3 rounded-xl transition-all shadow-glow-gold hover:shadow-2xl text-xs uppercase tracking-widest">
-                      اشترك الآن
+                    <Search className="absolute right-4 top-7 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <button
+                      type="submit"
+                      className="mt-4 w-full bg-navy-900 hover:bg-gold-500 text-white hover:text-navy-900 font-bold py-4 rounded-2xl transition-all shadow-lg text-xs uppercase tracking-widest">
+                      بحث
                     </button>
                   </form>
+                </div>
+
+                {/* Latest News Widget */}
+                <div className="bg-navy-900 rounded-[2rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-gold-500/20 transition-all duration-500"></div>
+                  <h4 className="headline-arabic text-xl font-black mb-8 relative z-10 border-r-4 border-gold-500 pr-4">
+                    أحدث <span className="text-gold-500">الأخبار</span>
+                  </h4>
+                  <div className="space-y-6 relative z-10">
+                    {latestArticles.map((latest) => (
+                      <Link
+                        key={latest.id}
+                        href={`/article/${latest.slug}`}
+                        className="flex gap-4 group/item">
+                        <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border border-white/10">
+                          <img
+                            src={latest.thumbnail_url}
+                            alt={latest.title}
+                            className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="flex flex-col justify-center">
+                          <span className="text-gold-400 text-[10px] font-black uppercase tracking-widest mb-1">
+                            {latest.category.name}
+                          </span>
+                          <h5 className="text-sm font-bold leading-snug group-hover/item:text-gold-500 transition-colors line-clamp-2">
+                            {latest.title}
+                          </h5>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  <Link
+                    href="/articles"
+                    className="mt-8 w-full inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-gold-500 text-white hover:text-navy-900 font-bold py-4 rounded-2xl transition-all border border-white/10 hover:border-gold-500 text-xs uppercase tracking-widest">
+                    عرض جميع المقالات
+                    <ArrowLeft className="w-4 h-4 rotate-180" />
+                  </Link>
                 </div>
               </div>
             </div>

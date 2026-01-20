@@ -18,9 +18,12 @@ import {
   ChevronDown,
   ChevronUp,
   User,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import MegaMenu from './MegaMenu';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const navigationItems = [
   { id: 'home', name: 'الرئيسية', slug: '' },
@@ -95,6 +98,7 @@ const navigationItems = [
 
 export default function Header() {
   const pathname = usePathname();
+  const { theme, toggleTheme, isLight } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -170,7 +174,7 @@ export default function Header() {
     if (e) e.preventDefault();
     if (searchQuery.trim()) {
       window.location.href = `/articles?search=${encodeURIComponent(
-        searchQuery.trim()
+        searchQuery.trim(),
       )}`;
       setSearchOpen(false);
       setSearchQuery('');
@@ -352,6 +356,18 @@ export default function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-3 flex-shrink-0">
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg transition-all text-gray-400 hover:text-gold-500 hover:bg-white/5 border border-white/5"
+                aria-label={isLight ? 'تفعيل الوضع الداكن' : 'تفعيل الوضع الفاتح'}>
+                {isLight ? (
+                  <Moon className="w-5 h-5" />
+                ) : (
+                  <Sun className="w-5 h-5" />
+                )}
+              </button>
+
               {/* Search */}
               <div className="hidden md:block relative">
                 <AnimatePresence mode="wait">
@@ -385,7 +401,7 @@ export default function Header() {
 
                       {/* Search Suggestions Dropdown */}
                       {(searchSuggestions.length > 0 || loadingSuggestions) && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-premium border border-gray-200 max-h-96 overflow-y-auto z-50">
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 max-h-96 overflow-y-auto z-[9999]">
                           {loadingSuggestions ? (
                             <div className="p-4 text-center text-gray-500">
                               <div className="animate-spin w-5 h-5 border-2 border-gold-500 border-t-transparent rounded-full mx-auto"></div>
@@ -485,7 +501,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute top-0 left-0 bottom-0 w-80 max-w-full bg-white shadow-premium overflow-y-auto z-[100px]">
+              className="absolute top-0 left-0 bottom-0 w-80 max-w-full bg-white shadow-premium overflow-y-auto z-[100]">
               <nav className="p-6 flex flex-col gap-2">
                 {/* Mobile Search */}
                 <form onSubmit={handleSearch} className="relative mb-4">
@@ -500,7 +516,7 @@ export default function Header() {
 
                   {/* Mobile Search Suggestions */}
                   {(searchSuggestions.length > 0 || loadingSuggestions) && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-premium border border-gray-200 max-h-64 overflow-y-auto z-50">
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto z-[9999]">
                       {loadingSuggestions ? (
                         <div className="p-4 text-center text-gray-500">
                           <div className="animate-spin w-5 h-5 border-2 border-gold-500 border-t-transparent rounded-full mx-auto"></div>
@@ -600,6 +616,22 @@ export default function Header() {
                 <div className="border-t border-gray-200 my-4"></div>
 
                 <div className="grid grid-cols-1 gap-3">
+                  {/* Mobile Theme Toggle */}
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-2 px-4 py-3 bg-gray-50 text-navy-900 rounded-xl font-bold justify-center border border-gray-200">
+                    {isLight ? (
+                      <>
+                        <Moon className="w-5 h-5 text-gold-500" />
+                        الوضع الداكن
+                      </>
+                    ) : (
+                      <>
+                        <Sun className="w-5 h-5 text-gold-500" />
+                        الوضع الفاتح
+                      </>
+                    )}
+                  </button>
                   <Link
                     href="/articles"
                     className="flex items-center gap-2 px-4 py-3 bg-white border border-gold-500 text-navy-900 rounded-xl font-bold justify-center shadow-lg"

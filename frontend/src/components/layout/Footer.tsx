@@ -45,7 +45,7 @@ export default function Footer() {
     e.preventDefault();
     if (footerSearchQuery.trim()) {
       router.push(
-        `/articles?search=${encodeURIComponent(footerSearchQuery.trim())}`
+        `/articles?search=${encodeURIComponent(footerSearchQuery.trim())}`,
       );
       setFooterSearchQuery('');
       setSearchSuggestions([]);
@@ -90,7 +90,7 @@ export default function Footer() {
       <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-gold-500/50 via-gold-500 to-gold-500/50"></div>
 
       {/* Search Section - Premium Glassmorphism */}
-      <div className="bg-white/5 border-b border-white/5 relative z-10 backdrop-blur-md">
+      <div className="bg-white/5 border-b border-white/5 relative z-20 backdrop-blur-md">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl mx-auto text-center">
             <h3 className="headline-arabic text-3xl md:text-4xl font-black text-white mb-4">
@@ -124,7 +124,7 @@ export default function Footer() {
 
                 {/* Search Suggestions Dropdown (Styled for Footer Dark Theme) */}
                 {(searchSuggestions.length > 0 || loadingSuggestions) && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-navy-800 rounded-lg shadow-premium border border-navy-600 max-h-64 overflow-y-auto z-[1000] text-right">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-navy-800 rounded-xl shadow-2xl border border-navy-600 max-h-64 overflow-y-auto z-[9999] text-right">
                     {loadingSuggestions ? (
                       <div className="p-4 text-center text-gray-400">
                         <div className="animate-spin w-5 h-5 border-2 border-gold-500 border-t-transparent rounded-full mx-auto"></div>
@@ -156,21 +156,20 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16 relative z-10">
+      <div className="container mx-auto px-4 py-16 relative z-[1]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* About Sono */}
           <div>
             <Link href="/" className="inline-block mb-6">
               <h2 className="headline-arabic text-3xl font-bold tracking-tight">
-                <span className="text-white">سونو</span>
+                <span className="text-white">{settings.site_name || 'سونو'}</span>
               </h2>
               <p className="text-xs text-gold-400 tracking-wider mt-1 headline-arabic">
-                الصحه حضارة ... مصر اصلها
+                {settings.site_slogan || 'الصحه حضارة ... مصر اصلها'}
               </p>
             </Link>
             <p className="text-gray-400 leading-relaxed text-sm mb-6">
-              مصدرك الموثوق للأخبار الطبية الموثوقة والأبحاث المتطورة والتحليلات
-              من الخبراء. نربط الفجوة بين العلوم الطبية والفهم العام.
+              {settings.site_description || 'مصدرك الموثوق للأخبار الطبية الموثوقة والأبحاث المتطورة والتحليلات من الخبراء. نربط الفجوة بين العلوم الطبية والفهم العام.'}
             </p>
             <div className="flex gap-3">
               <a
@@ -290,27 +289,27 @@ export default function Footer() {
               <p className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  مبنى الصحافة الطبية
+                  {settings.contact_address_line1 || 'مبنى الصحافة الطبية'}
                   <br />
-                  123 شارع الصحة
+                  {settings.contact_address_line2 || '123 شارع الصحة'}
                   <br />
-                  القاهرة، مصر
+                  {settings.contact_address_line3 || 'القاهرة، مصر'}
                 </span>
               </p>
               <p className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-gold-500 flex-shrink-0" />
                 <a
-                  href="mailto:editorial@sono.news"
+                  href={`mailto:${settings.contact_email || 'editorial@sono.news'}`}
                   className="hover:text-gold-400 transition-colors">
-                  editorial@sono.news
+                  {settings.contact_email || 'editorial@sono.news'}
                 </a>
               </p>
               <p className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-gold-500 flex-shrink-0" />
                 <a
-                  href="tel:+201234567890"
+                  href={`tel:${(settings.contact_phone || '+20 123 456 7890').replace(/\s/g, '')}`}
                   className="hover:text-gold-400 transition-colors">
-                  +20 123 456 7890
+                  {settings.contact_phone || '+20 123 456 7890'}
                 </a>
               </p>
             </div>
@@ -319,26 +318,26 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-navy-800 bg-navy-950/50 relative z-10">
+      <div className="border-t border-navy-800 bg-navy-950/50 relative z-[1]">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <p>© 2025 سونو - الصحافة الطبية. جميع الحقوق محفوظة.</p>
           <div className="flex gap-6">
-            <a
-              href="/privacy"
+            <Link
+              href="/privacy-policy"
               className="hover:text-gold-400 transition-colors">
               سياسة الخصوصية
-            </a>
-            <a href="/terms" className="hover:text-gold-400 transition-colors">
+            </Link>
+            <Link href="/terms-of-use" className="hover:text-gold-400 transition-colors">
               شروط الاستخدام
-            </a>
-            <a href="/ethics" className="hover:text-gold-400 transition-colors">
+            </Link>
+            <Link href="/ethics-policy" className="hover:text-gold-400 transition-colors">
               سياسة الأخلاقيات
-            </a>
-            <a
-              href="/sitemap"
+            </Link>
+            <Link
+              href="/sitemap-page"
               className="hover:text-gold-400 transition-colors">
               خريطة الموقع
-            </a>
+            </Link>
           </div>
         </div>
       </div>

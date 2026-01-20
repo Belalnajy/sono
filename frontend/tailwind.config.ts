@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     container: {
@@ -15,7 +15,7 @@ const config: Config = {
       colors: {
         background: '#ffffff',
         foreground: '#1f2937',
-        
+
         // Sono Medical News Color Palette
         navy: {
           50: '#f0f4f8',
@@ -54,7 +54,7 @@ const config: Config = {
           800: '#365d7a',
           900: '#2a4a5f',
         },
-        
+
         // Legacy support (mapped to new palette)
         primary: {
           50: '#f0f4f8',
@@ -99,9 +99,11 @@ const config: Config = {
         sans: ['var(--font-tajawal)', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'elegant': '0 2px 8px -2px rgba(11, 24, 41, 0.08), 0 1px 4px -1px rgba(11, 24, 41, 0.06)',
-        'premium': '0 20px 40px -12px rgba(11, 24, 41, 0.15), 0 8px 16px -8px rgba(11, 24, 41, 0.1)',
-        'medical': '0 4px 16px -4px rgba(11, 24, 41, 0.12)',
+        elegant:
+          '0 2px 8px -2px rgba(11, 24, 41, 0.08), 0 1px 4px -1px rgba(11, 24, 41, 0.06)',
+        premium:
+          '0 20px 40px -12px rgba(11, 24, 41, 0.15), 0 8px 16px -8px rgba(11, 24, 41, 0.1)',
+        medical: '0 4px 16px -4px rgba(11, 24, 41, 0.12)',
         'glow-gold': '0 0 20px rgba(191, 155, 80, 0.3)',
         'glow-blue': '0 0 20px rgba(138, 186, 221, 0.3)',
       },
@@ -131,12 +133,13 @@ const config: Config = {
         'fade-in-down': 'fadeInDown 0.4s ease-out',
         'fade-in-up': 'fadeInUp 0.4s ease-out',
         'slide-left': 'slideLeft 30s linear infinite',
-        'shimmer': 'shimmer 3s infinite',
+        shimmer: 'shimmer 3s infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'medical-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230B1829' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        'medical-pattern':
+          "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230B1829' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
     },
   },

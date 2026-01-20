@@ -143,13 +143,13 @@ export default function HeroSlider({ articles }: HeroSliderProps) {
                   onError={(e) => {
                     console.error(
                       `Failed to load image for article ${index}:`,
-                      article.thumbnail_url
+                      article.thumbnail_url,
                     );
                   }}
                   onLoad={() => {
                     console.log(
                       `Image loaded successfully for article ${index}:`,
-                      article.thumbnail_url
+                      article.thumbnail_url,
                     );
                   }}
                 />
@@ -193,7 +193,7 @@ export default function HeroSlider({ articles }: HeroSliderProps) {
                             month: 'long',
                             day: 'numeric',
                             year: 'numeric',
-                          }
+                          },
                         )}
                       </span>
                       <span className="sm:hidden">
@@ -202,7 +202,7 @@ export default function HeroSlider({ articles }: HeroSliderProps) {
                           {
                             month: 'short',
                             day: 'numeric',
-                          }
+                          },
                         )}
                       </span>
                     </div>

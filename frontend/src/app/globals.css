@@ -12,6 +12,30 @@
   --soft-tint: #f8fafc; /* Very light navy tint */
   --font-cairo: 'Cairo', 'Tajawal', sans-serif;
   --font-tajawal: 'Tajawal', sans-serif;
+
+  /* Hero Section Theme Variables - Default Dark */
+  --hero-bg: #0b121e;
+  --hero-bg-gradient: radial-gradient(circle_at_30%_20%, #1e293b, transparent 40%);
+  --hero-overlay: linear-gradient(to bottom, transparent, rgba(11, 18, 30, 0.8), #0b121e);
+  --hero-text-primary: #ffffff;
+  --hero-text-secondary: #9ca3af;
+  --hero-text-muted: #6b7280;
+  --hero-glass-bg: rgba(255, 255, 255, 0.05);
+  --hero-glass-border: rgba(255, 255, 255, 0.1);
+  --hero-orb-opacity: 0.1;
+}
+
+/* Light Theme */
+[data-theme='light'] {
+  --hero-bg: #ffffff;
+  --hero-bg-gradient: radial-gradient(circle_at_30%_20%, #f8fafc, transparent 60%);
+  --hero-overlay: none;
+  --hero-text-primary: #0b1829;
+  --hero-text-secondary: #4b5563;
+  --hero-text-muted: #6b7280;
+  --hero-glass-bg: rgba(11, 24, 41, 0.05);
+  --hero-glass-border: rgba(11, 24, 41, 0.1);
+  --hero-orb-opacity: 0.05;
 }
 
 * {
@@ -330,4 +354,89 @@ img {
 /* Hero slider transitions */
 .hero-slider .slick-slide {
   transition: opacity 1s ease-in-out;
+}
+
+/* ===================================
+   HERO SECTION THEME STYLES
+   =================================== */
+
+.hero-section {
+  background-color: var(--hero-bg);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hero-bg-gradient);
+  pointer-events: none;
+}
+
+.hero-text-primary {
+  color: var(--hero-text-primary);
+  transition: color 0.5s ease;
+}
+
+.hero-text-secondary {
+  color: var(--hero-text-secondary);
+  transition: color 0.5s ease;
+}
+
+.hero-text-muted {
+  color: var(--hero-text-muted);
+  transition: color 0.5s ease;
+}
+
+.hero-glass {
+  background: var(--hero-glass-bg);
+  border-color: var(--hero-glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+
+/* Hero orbs - hide in light mode */
+[data-theme='light'] .hero-orb {
+  opacity: 0.03;
+}
+
+[data-theme='dark'] .hero-orb,
+:root:not([data-theme]) .hero-orb {
+  opacity: 0.1;
+}
+
+/* Hero overlay - hide in light mode */
+[data-theme='light'] .hero-overlay {
+  display: none;
+}
+
+/* Light mode specific hero adjustments */
+[data-theme='light'] .hero-section {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+[data-theme='light'] .hero-section .text-white {
+  color: var(--hero-text-primary);
+}
+
+[data-theme='light'] .hero-section .text-gray-300,
+[data-theme='light'] .hero-section .text-gray-400 {
+  color: var(--hero-text-secondary);
+}
+
+[data-theme='light'] .hero-section .text-gray-500 {
+  color: var(--hero-text-muted);
+}
+
+[data-theme='light'] .hero-section .bg-white\/5 {
+  background: rgba(11, 24, 41, 0.05);
+}
+
+[data-theme='light'] .hero-section .border-white\/10 {
+  border-color: rgba(11, 24, 41, 0.1);
+}
+
+[data-theme='light'] .hero-section .border-white\/5 {
+  border-color: rgba(11, 24, 41, 0.05);
 }

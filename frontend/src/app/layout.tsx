@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const tajawal = Tajawal({
   subsets: ['arabic'],
@@ -68,30 +69,32 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <body
         className={`${tajawal.variable} ${cairo.variable} antialiased bg-background text-foreground font-arabic`}>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#0B1829',
-              color: '#fff',
-              boxShadow: '0 8px 24px -4px rgba(11, 24, 41, 0.2)',
-              borderRadius: '12px',
-              padding: '16px 20px',
-              fontSize: '15px',
-              border: '1px solid rgba(191, 155, 80, 0.2)',
-            },
-            success: {
-              iconTheme: {
-                primary: '#BF9B50',
-                secondary: '#fff',
+        <ThemeProvider>
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#0B1829',
+                color: '#fff',
+                boxShadow: '0 8px 24px -4px rgba(11, 24, 41, 0.2)',
+                borderRadius: '12px',
+                padding: '16px 20px',
+                fontSize: '15px',
+                border: '1px solid rgba(191, 155, 80, 0.2)',
               },
-            },
-          }}
-        />
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+              success: {
+                iconTheme: {
+                  primary: '#BF9B50',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

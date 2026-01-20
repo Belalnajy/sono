@@ -45,7 +45,7 @@ export default function Pagination({
               : 'bg-white text-navy-900 border border-gray-100 hover:border-gold-500 hover:text-gold-500 shadow-sm'
           }`}>
           {i}
-        </Link>
+        </Link>,
       );
     }
 

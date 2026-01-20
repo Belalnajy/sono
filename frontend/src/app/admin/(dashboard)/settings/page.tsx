@@ -11,6 +11,10 @@ import {
   Save,
   LayoutDashboard,
   Bell,
+  MapPin,
+  Mail,
+  Phone,
+  Building2,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
@@ -22,6 +26,16 @@ export default function SettingsPage() {
     instagram_url: '',
     youtube_url: '',
     news_ticker: '',
+    // Contact Information
+    contact_address_line1: '',
+    contact_address_line2: '',
+    contact_address_line3: '',
+    contact_email: '',
+    contact_phone: '',
+    // Site Info
+    site_name: '',
+    site_slogan: '',
+    site_description: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -95,16 +109,23 @@ export default function SettingsPage() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">
-                  إعدادات التواصل الاجتماعي
+                  الإعدادات العامة
                 </h1>
                 <p className="text-gray-500 text-sm mt-1">
-                  قم بتحديث روابط حسابات التواصل الاجتماعي التي تظهر في الموقع
+                  قم بتحديث معلومات الموقع وبيانات التواصل والروابط الاجتماعية
                 </p>
               </div>
             </div>
           </div>
 
           <form onSubmit={handleSave} className="p-8 space-y-6">
+            {/* Social Media Links */}
+            <div>
+              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-primary-500" />
+                روابط التواصل الاجتماعي
+              </h3>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Facebook */}
               <div className="space-y-2">
@@ -166,6 +187,152 @@ export default function SettingsPage() {
                   placeholder="https://youtube.com/yourchannel"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
                 />
+              </div>
+            </div>
+
+            {/* Site Info Section */}
+            <div className="pt-8 border-t border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    معلومات الموقع
+                  </h2>
+                  <p className="text-gray-500 text-sm mt-0.5">
+                    اسم الموقع والشعار والوصف
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    اسم الموقع
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.site_name}
+                    onChange={(e) => handleChange('site_name', e.target.value)}
+                    placeholder="سونو"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    شعار الموقع
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.site_slogan}
+                    onChange={(e) => handleChange('site_slogan', e.target.value)}
+                    placeholder="الصحه حضارة ... مصر اصلها"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    وصف الموقع
+                  </label>
+                  <textarea
+                    value={settings.site_description}
+                    onChange={(e) => handleChange('site_description', e.target.value)}
+                    placeholder="مصدرك الموثوق للأخبار الطبية..."
+                    rows={3}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Info Section */}
+            <div className="pt-8 border-t border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    معلومات التواصل
+                  </h2>
+                  <p className="text-gray-500 text-sm mt-0.5">
+                    العنوان والبريد الإلكتروني ورقم الهاتف
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    العنوان - السطر الأول
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.contact_address_line1}
+                    onChange={(e) => handleChange('contact_address_line1', e.target.value)}
+                    placeholder="مبنى الصحافة الطبية"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    العنوان - السطر الثاني
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.contact_address_line2}
+                    onChange={(e) => handleChange('contact_address_line2', e.target.value)}
+                    placeholder="123 شارع الصحة"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700">
+                    العنوان - السطر الثالث
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.contact_address_line3}
+                    onChange={(e) => handleChange('contact_address_line3', e.target.value)}
+                    placeholder="القاهرة، مصر"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700">
+                    <Mail className="w-4 h-4 text-gold-500" />
+                    البريد الإلكتروني
+                  </label>
+                  <input
+                    type="email"
+                    value={settings.contact_email}
+                    onChange={(e) => handleChange('contact_email', e.target.value)}
+                    placeholder="editorial@sono.news"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-bold text-gray-700">
+                    <Phone className="w-4 h-4 text-gold-500" />
+                    رقم الهاتف
+                  </label>
+                  <input
+                    type="tel"
+                    value={settings.contact_phone}
+                    onChange={(e) => handleChange('contact_phone', e.target.value)}
+                    placeholder="+20 123 456 7890"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
+                  />
+                </div>
               </div>
             </div>
 

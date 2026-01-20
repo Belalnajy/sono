@@ -27,7 +27,7 @@ export default function SubCategoryPage({
 
         // Fetch Subcategory by ID (need to resolve slug first) or just by slug if we trust it unique enough
         const subData = (await apiClient.getSubcategoryBySlug(
-          subCategory
+          subCategory,
         )) as any;
         setSubcategory(subData);
 
@@ -157,7 +157,7 @@ export default function SubCategoryPage({
                         </h4>
                         <p className="text-xs text-gray-500">
                           {new Date(
-                            article.created_at || Date.now()
+                            article.created_at || Date.now(),
                           ).toLocaleDateString('ar-EG')}
                         </p>
                       </div>

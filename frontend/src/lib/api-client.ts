@@ -2,8 +2,8 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 // Internal URL for SSR fetching on the server
-const INTERNAL_API_URL = 'http://127.0.0.1:3000/api';
-
+const INTERNAL_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api';
 class ApiClient {
   private baseURL: string;
 

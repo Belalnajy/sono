@@ -154,23 +154,6 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Default Credentials Hint */}
-          <div className="mt-8 p-4 bg-primary-50 rounded-xl border border-primary-100/50">
-            <p className="text-xs text-primary-800/70 text-center leading-relaxed font-medium">
-              <span className="block mb-2 text-primary-900 font-bold">
-                🛠️ بيانات تجريبية:
-              </span>
-              اسم المستخدم:{' '}
-              <code className="bg-white px-2 py-0.5 rounded border border-primary-200 mx-1 select-all">
-                admin
-              </code>
-              كلمة المرور:{' '}
-              <code className="bg-white px-2 py-0.5 rounded border border-primary-200 mx-1 select-all">
-                admin123
-              </code>
-            </p>
-          </div>
-
           {/* Back to Home */}
           <div className="mt-6 text-center">
             <a
