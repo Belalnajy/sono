@@ -18,7 +18,7 @@ export default function AdminHeader({
   }, []);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 h-20 px-6 flex items-center justify-between sticky top-0 z-30">
+    <header className="bg-white shadow-sm border-b border-gray-100 h-16 md:h-20 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
       {/* Left Side: Toggle & Title (for mobile mainly, or context) */}
       <div className="flex items-center gap-4">
         <button
@@ -46,7 +46,7 @@ export default function AdminHeader({
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 pl-2 border-r border-gray-100 mr-2 pr-2">
+        <div className="flex items-center gap-3 pl-2 md:border-r border-gray-100 md:mr-2 md:pr-2">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary-600 to-primary-800 flex items-center justify-center text-white font-bold shadow-md ring-2 ring-white">
             {user?.username?.[0]?.toUpperCase() || 'A'}
           </div>
