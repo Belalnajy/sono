@@ -250,7 +250,7 @@ export default function TeamManagement() {
       {/* Content */}
       <div className="container mx-auto px-6 py-8">
         {/* Actions Bar */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <Link
               href="/admin/dashboard"

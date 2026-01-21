@@ -4,7 +4,15 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api-client';
-import { Plus, Edit, Trash2, ArrowRight, LayoutDashboard, Folder, X } from 'lucide-react';
+import {
+  Plus,
+  Edit,
+  Trash2,
+  ArrowRight,
+  LayoutDashboard,
+  Folder,
+  X,
+} from 'lucide-react';
 import toast from 'react-hot-toast';
 import ConfirmationModal from '@/components/ui/ConfirmationModal';
 
@@ -65,7 +73,7 @@ export default function CategoriesManagement() {
       setShowEditModal(false);
       setCurrentCategory(null);
       setFormData({ name: '', slug: '' });
-       toast.success('تم تعديل القسم بنجاح');
+      toast.success('تم تعديل القسم بنجاح');
       loadCategories();
     } catch (error: any) {
       toast.error('فشل تعديل القسم: ' + error.message);
@@ -113,8 +121,8 @@ export default function CategoriesManagement() {
       <ConfirmationModal
         isOpen={deleteModalOpen}
         onClose={() => {
-            setDeleteModalOpen(false);
-            setCategoryToDelete(null);
+          setDeleteModalOpen(false);
+          setCategoryToDelete(null);
         }}
         onConfirm={handleDelete}
         title="حذف القسم"
@@ -124,20 +132,21 @@ export default function CategoriesManagement() {
       {/* Content */}
       <div className="container mx-auto px-6 py-8">
         {/* Actions Bar */}
-        <div className="mb-8 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-gray-500 text-sm">
-                <Link href="/admin/dashboard" className="hover:text-primary-600 transition-colors flex items-center gap-1">
-                    <LayoutDashboard className="w-4 h-4" />
-                    لوحة التحكم
-                </Link>
-                <span>/</span>
-                <span className="text-gray-900 font-medium">الأقسام</span>
-            </div>
+        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-gray-500 text-sm">
+            <Link
+              href="/admin/dashboard"
+              className="hover:text-primary-600 transition-colors flex items-center gap-1">
+              <LayoutDashboard className="w-4 h-4" />
+              لوحة التحكم
+            </Link>
+            <span>/</span>
+            <span className="text-gray-900 font-medium">الأقسام</span>
+          </div>
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-xl transition font-medium shadow-lg hover:shadow-accent-500/30 border border-accent-400 flex items-center gap-2"
-          >
+            className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-xl transition font-medium shadow-lg hover:shadow-accent-500/30 border border-accent-400 flex items-center gap-2">
             <Plus className="w-5 h-5" />
             <span>إضافة قسم جديد</span>
           </button>
@@ -146,39 +155,43 @@ export default function CategoriesManagement() {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => (
-            <div key={category.id} className="bg-white rounded-2xl shadow-elegant p-6 border border-gray-100 hover:shadow-premium transition-all group">
+            <div
+              key={category.id}
+              className="bg-white rounded-2xl shadow-elegant p-6 border border-gray-100 hover:shadow-premium transition-all group">
               <div className="flex items-start justify-between mb-4">
-                  <div className="bg-primary-50 p-3 rounded-xl text-primary-600 group-hover:scale-110 transition-transform">
-                      <Folder className="w-6 h-6" />
-                  </div>
-                  <div className="flex gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                    <button
+                <div className="bg-primary-50 p-3 rounded-xl text-primary-600 group-hover:scale-110 transition-transform">
+                  <Folder className="w-6 h-6" />
+                </div>
+                <div className="flex gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                  <button
                     onClick={() => openEditModal(category)}
                     className="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors"
-                    title="تعديل"
-                    >
+                    title="تعديل">
                     <Edit className="w-4 h-4" />
-                    </button>
-                    <button
+                  </button>
+                  <button
                     onClick={() => confirmDelete(category.id)}
                     className="p-2 hover:bg-red-50 text-red-600 rounded-lg transition-colors"
-                    title="حذف"
-                    >
+                    title="حذف">
                     <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+                  </button>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{category.name}</h3>
-              <p className="text-sm text-gray-500 font-mono bg-gray-50 inline-block px-2 py-1 rounded">{category.slug}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">
+                {category.name}
+              </h3>
+              <p className="text-sm text-gray-500 font-mono bg-gray-50 inline-block px-2 py-1 rounded">
+                {category.slug}
+              </p>
             </div>
           ))}
         </div>
 
         {categories.length === 0 && (
           <div className="text-center py-16 text-gray-500 bg-white rounded-2xl shadow-elegant border border-gray-100">
-             <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Folder className="w-8 h-8 text-gray-400" />
-              </div>
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Folder className="w-8 h-8 text-gray-400" />
+            </div>
             <p className="font-medium">لا توجد أقسام</p>
             <p className="text-sm mt-1">قم بإضافة أقسام لتنظيم المقالات</p>
           </div>
@@ -190,35 +203,52 @@ export default function CategoriesManagement() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl animate-fade-in-down">
             <div className="flex items-center justify-between mb-6">
-                 <h2 className="text-2xl font-bold text-gray-900">إضافة قسم جديد</h2>
-                 <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-red-500 transition-colors">
-                     <X className="w-6 h-6" />
-                 </button>
+              <h2 className="text-2xl font-bold text-gray-900">
+                إضافة قسم جديد
+              </h2>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="text-gray-400 hover:text-red-500 transition-colors">
+                <X className="w-6 h-6" />
+              </button>
             </div>
-            
+
             <form onSubmit={handleAdd} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">اسم القسم</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  اسم القسم
+                </label>
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ name: e.target.value, slug: generateSlug(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      name: e.target.value,
+                      slug: generateSlug(e.target.value),
+                    })
+                  }
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Slug</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slug
+                </label>
                 <input
                   type="text"
                   value={formData.slug}
-                  onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, slug: e.target.value })
+                  }
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-gray-50"
                   required
                 />
               </div>
               <div className="flex gap-3 pt-2">
-                <button type="submit" className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded-xl font-medium transition-colors shadow-lg shadow-primary-600/20">
+                <button
+                  type="submit"
+                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded-xl font-medium transition-colors shadow-lg shadow-primary-600/20">
                   حفظ
                 </button>
                 <button
@@ -227,8 +257,7 @@ export default function CategoriesManagement() {
                     setShowAddModal(false);
                     setFormData({ name: '', slug: '' });
                   }}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl font-medium transition-colors"
-                >
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl font-medium transition-colors">
                   إلغاء
                 </button>
               </div>
@@ -242,34 +271,46 @@ export default function CategoriesManagement() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl animate-fade-in-down">
             <div className="flex items-center justify-between mb-6">
-                 <h2 className="text-2xl font-bold text-gray-900">تعديل القسم</h2>
-                 <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-red-500 transition-colors">
-                     <X className="w-6 h-6" />
-                 </button>
+              <h2 className="text-2xl font-bold text-gray-900">تعديل القسم</h2>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="text-gray-400 hover:text-red-500 transition-colors">
+                <X className="w-6 h-6" />
+              </button>
             </div>
             <form onSubmit={handleEdit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">اسم القسم</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  اسم القسم
+                </label>
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Slug</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slug
+                </label>
                 <input
                   type="text"
                   value={formData.slug}
-                  onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, slug: e.target.value })
+                  }
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-gray-50"
                   required
                 />
               </div>
               <div className="flex gap-3 pt-2">
-                <button type="submit" className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded-xl font-medium transition-colors shadow-lg shadow-primary-600/20">
+                <button
+                  type="submit"
+                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded-xl font-medium transition-colors shadow-lg shadow-primary-600/20">
                   حفظ
                 </button>
                 <button
@@ -279,8 +320,7 @@ export default function CategoriesManagement() {
                     setCurrentCategory(null);
                     setFormData({ name: '', slug: '' });
                   }}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl font-medium transition-colors"
-                >
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-3 rounded-xl font-medium transition-colors">
                   إلغاء
                 </button>
               </div>

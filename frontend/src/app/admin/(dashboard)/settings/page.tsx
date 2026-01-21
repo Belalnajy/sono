@@ -88,7 +88,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gray-50/50">
       <div className="container mx-auto px-6 py-8 max-w-4xl">
         {/* Breadcrumbs */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <Link
               href="/admin/dashboard"
@@ -227,7 +227,9 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={settings.site_slogan}
-                    onChange={(e) => handleChange('site_slogan', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('site_slogan', e.target.value)
+                    }
                     placeholder="الصحه حضارة ... مصر اصلها"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
                   />
@@ -239,7 +241,9 @@ export default function SettingsPage() {
                   </label>
                   <textarea
                     value={settings.site_description}
-                    onChange={(e) => handleChange('site_description', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('site_description', e.target.value)
+                    }
                     placeholder="مصدرك الموثوق للأخبار الطبية..."
                     rows={3}
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
@@ -272,7 +276,9 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={settings.contact_address_line1}
-                    onChange={(e) => handleChange('contact_address_line1', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('contact_address_line1', e.target.value)
+                    }
                     placeholder="مبنى الصحافة الطبية"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
                   />
@@ -285,7 +291,9 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={settings.contact_address_line2}
-                    onChange={(e) => handleChange('contact_address_line2', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('contact_address_line2', e.target.value)
+                    }
                     placeholder="123 شارع الصحة"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
                   />
@@ -298,7 +306,9 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={settings.contact_address_line3}
-                    onChange={(e) => handleChange('contact_address_line3', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('contact_address_line3', e.target.value)
+                    }
                     placeholder="القاهرة، مصر"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-right"
                   />
@@ -314,7 +324,9 @@ export default function SettingsPage() {
                   <input
                     type="email"
                     value={settings.contact_email}
-                    onChange={(e) => handleChange('contact_email', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('contact_email', e.target.value)
+                    }
                     placeholder="editorial@sono.news"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
                   />
@@ -328,7 +340,9 @@ export default function SettingsPage() {
                   <input
                     type="tel"
                     value={settings.contact_phone}
-                    onChange={(e) => handleChange('contact_phone', e.target.value)}
+                    onChange={(e) =>
+                      handleChange('contact_phone', e.target.value)
+                    }
                     placeholder="+20 123 456 7890"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
                   />

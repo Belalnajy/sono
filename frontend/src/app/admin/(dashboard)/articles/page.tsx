@@ -47,7 +47,7 @@ export default function ArticlesManagement() {
         is_featured: !article.is_featured,
       });
       toast.success(
-        article.is_featured ? 'تم إزالة التمييز' : 'تم تمييز المقال'
+        article.is_featured ? 'تم إزالة التمييز' : 'تم تمييز المقال',
       );
       loadArticles();
     } catch (error: any) {
@@ -115,7 +115,7 @@ export default function ArticlesManagement() {
 
           <Link
             href="/admin/articles/new"
-            className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-xl transition font-medium shadow-lg hover:shadow-accent-500/30 border border-accent-400 flex items-center gap-2">
+            className="bg-accent-500 hover:bg-accent-600 text-white px-2 py-2 rounded-xl transition font-medium shadow-lg hover:shadow-accent-500/30 border border-accent-400 flex items-center gap-2">
             <Plus className="w-5 h-5" />
             <span>إضافة مقال جديد</span>
           </Link>
@@ -203,7 +203,7 @@ export default function ArticlesManagement() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
                       {new Date(
-                        article.published_at || article.created_at
+                        article.published_at || article.created_at,
                       ).toLocaleDateString('ar-EG')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
