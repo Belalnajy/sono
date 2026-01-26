@@ -404,6 +404,30 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                   dangerouslySetInnerHTML={{ __html: processedContent }}
                 />
 
+                {/* Video Embed */}
+                {article.video_url && getYouTubeEmbedUrl(article.video_url) && (
+                  <div className="mt-12 aspect-video rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={getYouTubeEmbedUrl(article.video_url)!}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen></iframe>
+                  </div>
+                )}
+
+                {/* Image Gallery */}
+                {article.images && article.images.length > 0 && (
+                  <div className="mt-16">
+                    <ImageGallery
+                      images={article.images}
+                      title={article.title}
+                    />
+                  </div>
+                )}
+
                 <div className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
                   <div className="flex flex-wrap gap-3">
                     <span className="text-navy-900 font-black text-xs uppercase tracking-widest flex items-center gap-2">

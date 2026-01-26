@@ -10,11 +10,25 @@ async function getArticles() {
   try {
     const response = await apiClient.getArticles({
       status: 'published',
-      limit: 20,
+      limit: 12, // Number of latest articles to show below hero
     });
     return response.articles as Article[];
   } catch (error) {
     console.error('Error fetching articles:', error);
+    return [];
+  }
+}
+
+async function getFeaturedArticles() {
+  try {
+    const response = await apiClient.getArticles({
+      status: 'published',
+      is_featured: true,
+      limit: 7, // 5 for slider + 2 for stack
+    });
+    return response.articles as Article[];
+  } catch (error) {
+    console.error('Error fetching featured articles:', error);
     return [];
   }
 }
@@ -34,11 +48,14 @@ import HeroSlider from '@/components/ui/HeroSlider';
 // ... existing imports ...
 
 export default async function HomePage() {
-  const articles = await getArticles();
-  const categories = await getCategories();
+  const [articles, featuredArticlesFromApi, categories] = await Promise.all([
+    getArticles(),
+    getFeaturedArticles(),
+    getCategories(),
+  ]);
 
   // Get featured articles
-  let featuredArticles = articles.filter((a) => a.is_featured);
+  let featuredArticles = featuredArticlesFromApi;
 
   // Fallback if none marked as featured
   if (featuredArticles.length === 0) {
@@ -47,14 +64,23 @@ export default async function HomePage() {
 
   // Slider takes top 5 featured
   const sliderArticles = featuredArticles.slice(0, 5);
+
   // Secondary featured takes next 2 featured or next from general if not enough
   const secondaryFeatured =
     featuredArticles.length > 5
       ? featuredArticles.slice(5, 7)
-      : articles.filter((a) => !sliderArticles.includes(a)).slice(0, 2);
+      : articles
+          .filter((a) => !sliderArticles.find((sa) => sa.id === a.id))
+          .slice(0, 2);
 
-  // Latest takes the rest
-  const latestArticles = articles.slice(0, 12);
+  // Latest takes the rest (ensure no duplicates with slider or secondary)
+  const excludeIds = new Set([
+    ...sliderArticles.map((a) => a.id),
+    ...secondaryFeatured.map((a) => a.id),
+  ]);
+  const latestArticles = articles
+    .filter((a) => !excludeIds.has(a.id))
+    .slice(0, 12);
 
   return (
     <div className="min-h-screen">
