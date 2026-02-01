@@ -18,13 +18,8 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
-  async create(@Body() createArticleDto: CreateArticleDto) {
-    try {
-      return await this.articlesService.create(createArticleDto);
-    } catch (error) {
-      console.error('Error creating article:', error);
-      throw error;
-    }
+  create(@Body() createArticleDto: CreateArticleDto) {
+    return this.articlesService.create(createArticleDto);
   }
 
   @Get()

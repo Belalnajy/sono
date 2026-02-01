@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -46,7 +50,16 @@ export class ArticlesService {
       category,
       subcategory,
     });
-    return await this.articleRepository.save(article);
+    try {
+      return await this.articleRepository.save(article);
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new ConflictException(
+          'Article with this slug/title already exists',
+        );
+      }
+      throw error;
+    }
   }
 
   async findAll(
