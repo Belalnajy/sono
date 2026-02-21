@@ -6,6 +6,9 @@ import Link from 'next/link';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Pagination from '@/components/ui/Pagination';
 
+// Force dynamic rendering so content is always fresh
+export const dynamic = 'force-dynamic';
+
 async function getArticles(params: {
   status?: string;
   categoryId?: string;

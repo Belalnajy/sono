@@ -6,6 +6,9 @@ import { ArrowLeft, Clock, User, TrendingUp, Bookmark } from 'lucide-react';
 import Link from 'next/link';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
+// Force dynamic rendering so content is always fresh (not cached at build time)
+export const dynamic = 'force-dynamic';
+
 async function getArticles() {
   try {
     const response = await apiClient.getArticles({

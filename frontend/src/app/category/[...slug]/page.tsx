@@ -4,6 +4,9 @@ import ArticleCard from '@/components/ui/ArticleCard';
 import { notFound } from 'next/navigation';
 import { FileText } from 'lucide-react';
 
+// Force dynamic rendering so content is always fresh
+export const dynamic = 'force-dynamic';
+
 interface CategoryPageProps {
   params: {
     slug: string;

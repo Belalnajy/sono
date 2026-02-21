@@ -3,6 +3,9 @@ import { Video as VideoType } from '@/types';
 import { Play, Calendar, Video, ArrowRight } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
+// Force dynamic rendering so content is always fresh
+export const dynamic = 'force-dynamic';
+
 async function getVideos() {
   try {
     const videos = await apiClient.getVideos();
