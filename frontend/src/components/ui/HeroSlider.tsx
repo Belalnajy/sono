@@ -140,6 +140,13 @@ export default function HeroSlider({ articles }: HeroSliderProps) {
                   className={`w-full h-full object-cover ${
                     index % 2 === 0 ? 'ken-burns-zoom' : 'ken-burns-pan'
                   }`}
+                  style={{
+                    objectPosition:
+                      article.thumbnail_focal_x !== undefined &&
+                      article.thumbnail_focal_y !== undefined
+                        ? `${article.thumbnail_focal_x}% ${article.thumbnail_focal_y}%`
+                        : 'center',
+                  }}
                   onError={(e) => {
                     console.error(
                       `Failed to load image for article ${index}:`,

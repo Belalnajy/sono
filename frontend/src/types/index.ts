@@ -23,6 +23,8 @@ export interface Article {
   slug: string;
   content: string;
   thumbnail_url?: string;
+  thumbnail_focal_x?: number;
+  thumbnail_focal_y?: number;
   images?: string[];
   video_url?: string;
   status: ArticleStatus;

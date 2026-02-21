@@ -29,6 +29,8 @@ export default function EditArticle({ params }: EditArticleProps) {
     categoryId: '',
     subcategoryId: '',
     is_featured: false,
+    thumbnail_focal_x: 50,
+    thumbnail_focal_y: 50,
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -60,12 +62,20 @@ export default function EditArticle({ params }: EditArticleProps) {
         categoryId: articleData.category?.id || '',
         subcategoryId: articleData.subcategory?.id || '',
         is_featured: articleData.is_featured || false,
+        thumbnail_focal_x:
+          articleData.thumbnail_focal_x !== undefined
+            ? articleData.thumbnail_focal_x
+            : 50,
+        thumbnail_focal_y:
+          articleData.thumbnail_focal_y !== undefined
+            ? articleData.thumbnail_focal_y
+            : 50,
       });
 
       // Load subcategories if category exists
       if (articleData.category?.slug) {
         const category = await apiClient.getCategoryBySlug(
-          articleData.category.slug
+          articleData.category.slug,
         );
         setSubcategories((category as any).subcategories || []);
       }
@@ -83,7 +93,7 @@ export default function EditArticle({ params }: EditArticleProps) {
     if (categoryId) {
       try {
         const category = await apiClient.getCategoryBySlug(
-          categories.find((c) => c.id === categoryId)?.slug || ''
+          categories.find((c) => c.id === categoryId)?.slug || '',
         );
         setSubcategories((category as any).subcategories || []);
       } catch (error) {
@@ -101,15 +111,32 @@ export default function EditArticle({ params }: EditArticleProps) {
     setUploadingImage(true);
     try {
       const result = await apiClient.uploadImage(file);
-      setFormData({ ...formData, thumbnail_url: result.url });
+      setFormData({
+        ...formData,
+        thumbnail_url: result.url,
+        thumbnail_focal_x: 50,
+        thumbnail_focal_y: 50,
+      });
     } catch (error: any) {
       alert('فشل رفع الصورة: ' + error.message);
       setUploadingImage(false);
     }
   };
 
+  const handleFocalPointClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    setFormData({
+      ...formData,
+      thumbnail_focal_x: Math.round(x),
+      thumbnail_focal_y: Math.round(y),
+    });
+  };
+
   const handleGalleryUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -117,7 +144,7 @@ export default function EditArticle({ params }: EditArticleProps) {
     setUploadingGallery(true);
     try {
       const uploadPromises = Array.from(files).map((file) =>
-        apiClient.uploadImage(file)
+        apiClient.uploadImage(file),
       );
       const results = await Promise.all(uploadPromises);
       const newImages = results.map((r) => r.url);
@@ -287,11 +314,37 @@ export default function EditArticle({ params }: EditArticleProps) {
               <p className="text-sm text-blue-600 mt-2">جاري رفع الصورة...</p>
             )}
             {formData.thumbnail_url && (
-              <img
-                src={formData.thumbnail_url}
-                alt="Preview"
-                className="mt-4 max-w-xs rounded-lg"
-              />
+              <div className="mt-4 space-y-2">
+                <p className="text-xs text-gray-500">
+                  انقر على الصورة لتحديد نقطة التركيز (المكان الذي سيظهر دائماً
+                  عند القص):
+                </p>
+                <div
+                  className="relative inline-block cursor-crosshair overflow-hidden rounded-lg group border-2 border-dashed border-gray-200 hover:border-blue-400 transition-colors"
+                  onClick={handleFocalPointClick}>
+                  <img
+                    src={formData.thumbnail_url}
+                    alt="Preview"
+                    className="max-w-full md:max-w-md block"
+                  />
+                  {/* Focal Point Indicator */}
+                  <div
+                    className="absolute w-6 h-6 border-2 border-white bg-blue-500/50 rounded-full shadow-lg -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                    style={{
+                      left: `${formData.thumbnail_focal_x}%`,
+                      top: `${formData.thumbnail_focal_y}%`,
+                    }}>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-1 h-1 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors pointer-events-none"></div>
+                </div>
+                <p className="text-xs font-medium text-blue-600">
+                  نقطة التركيز الحالية: {formData.thumbnail_focal_x}% عرض،{' '}
+                  {formData.thumbnail_focal_y}% طول
+                </p>
+              </div>
             )}
           </div>
 

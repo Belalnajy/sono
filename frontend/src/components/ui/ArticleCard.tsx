@@ -14,6 +14,13 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           src={article.thumbnail_url || '/placeholder-medical.jpg'}
           alt={article.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          style={{
+            objectPosition:
+              article.thumbnail_focal_x !== undefined &&
+              article.thumbnail_focal_y !== undefined
+                ? `${article.thumbnail_focal_x}% ${article.thumbnail_focal_y}%`
+                : 'center',
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div className="absolute top-4 right-4">

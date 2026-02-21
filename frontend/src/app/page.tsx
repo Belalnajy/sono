@@ -177,6 +177,13 @@ export default async function HomePage() {
                           }
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
+                          style={{
+                            objectPosition:
+                              article.thumbnail_focal_x !== undefined &&
+                              article.thumbnail_focal_y !== undefined
+                                ? `${article.thumbnail_focal_x}% ${article.thumbnail_focal_y}%`
+                                : 'center',
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent group-hover:via-navy-900/60 transition-all duration-500"></div>
                       </div>

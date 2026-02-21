@@ -290,6 +290,13 @@ export default function ArticlePage({ params }: ArticlePageProps) {
             src={article.thumbnail_url}
             alt={article.title}
             className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000"
+            style={{
+              objectPosition:
+                article.thumbnail_focal_x !== undefined &&
+                article.thumbnail_focal_y !== undefined
+                  ? `${article.thumbnail_focal_x}% ${article.thumbnail_focal_y}%`
+                  : 'center',
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0b121e] via-[#0b121e]/40 to-transparent"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(11,18,30,0.4)_100%)]"></div>

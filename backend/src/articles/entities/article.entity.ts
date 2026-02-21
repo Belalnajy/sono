@@ -31,6 +31,12 @@ export class Article {
   @Column({ nullable: true })
   thumbnail_url: string;
 
+  @Column({ type: 'float', nullable: true, default: 50 })
+  thumbnail_focal_x: number;
+
+  @Column({ type: 'float', nullable: true, default: 50 })
+  thumbnail_focal_y: number;
+
   @Column('text', { array: true, nullable: true })
   images: string[];
 

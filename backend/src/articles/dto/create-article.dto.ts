@@ -26,6 +26,12 @@ export class CreateArticleDto {
   @IsOptional()
   thumbnail_url?: string;
 
+  @IsOptional()
+  thumbnail_focal_x?: number;
+
+  @IsOptional()
+  thumbnail_focal_y?: number;
+
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
