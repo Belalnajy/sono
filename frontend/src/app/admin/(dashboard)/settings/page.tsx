@@ -5,7 +5,6 @@ import { apiClient } from '@/lib/api-client';
 import {
   Globe,
   Facebook,
-  Twitter,
   Instagram,
   Youtube,
   Save,
@@ -22,7 +21,7 @@ import Link from 'next/link';
 export default function SettingsPage() {
   const [settings, setSettings] = useState<Record<string, string>>({
     facebook_url: '',
-    twitter_url: '',
+    tiktok_url: '',
     instagram_url: '',
     youtube_url: '',
     news_ticker: '',
@@ -143,16 +142,16 @@ export default function SettingsPage() {
               </div>
 
               {/* Twitter */}
+              {/* TikTok */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-bold text-gray-700">
-                  <Twitter className="w-4 h-4 text-skyblue-500" />
-                  رابط تويتر (X)
+                  رابط TikTok
                 </label>
                 <input
                   type="text"
-                  value={settings.twitter_url}
-                  onChange={(e) => handleChange('twitter_url', e.target.value)}
-                  placeholder="https://twitter.com/yourprofile"
+                  value={settings.tiktok_url}
+                  onChange={(e) => handleChange('tiktok_url', e.target.value)}
+                  placeholder="https://tiktok.com/@yourprofile"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
                 />
               </div>

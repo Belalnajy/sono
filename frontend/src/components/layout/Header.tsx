@@ -10,7 +10,6 @@ import {
   Search,
   X,
   Facebook,
-  Twitter,
   Instagram,
   Youtube,
   TrendingUp,
@@ -25,75 +24,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import MegaMenu from './MegaMenu';
 import { useTheme } from '@/contexts/ThemeContext';
 
-const navigationItems = [
+// Static navigation items (pages that don't come from the database)
+const staticNavItems = [
   { id: 'home', name: 'الرئيسية', slug: '' },
   { id: 'about', name: 'من نحن', slug: 'about-us' },
-  {
-    id: 'medical-library',
-    name: 'المعرفة الطبية',
-    slug: 'medical-library',
-    groups: [
-      {
-        title: 'الأمراض',
-        items: [
-          { name: 'أمراض شائعة', slug: 'common-diseases' },
-          { name: 'الأمراض المزمنة', slug: 'chronic-diseases' },
-          { name: 'الصحة النفسية', slug: 'mental-health-diseases' },
-        ],
-      },
-      {
-        title: 'الأدوية',
-        items: [
-          { name: 'الاستخدامات', slug: 'medication-uses' },
-          { name: 'التحذيرات', slug: 'medication-warnings' },
-        ],
-      },
-      {
-        title: 'الإسعافات العامة',
-        items: [
-          { name: 'طوارئ الكبار', slug: 'adult-emergencies' },
-          { name: 'الإسعافات الأولية', slug: 'general-first-aid' },
-        ],
-      },
-    ],
-    // Flat list for mobile fallback or simplicity if needed, but we'll use groups in mobile too if possible
-    subcategories: [
-      { id: '3-1', name: 'أمراض شائعة', slug: 'common-diseases' },
-      { id: '3-2', name: 'الأمراض المزمنة', slug: 'chronic-diseases' },
-      { id: '3-3', name: 'الصحة النفسية', slug: 'mental-health-diseases' },
-      { id: '3-4', name: 'الاستخدامات', slug: 'medication-uses' },
-      { id: '3-5', name: 'التحذيرات', slug: 'medication-warnings' },
-      { id: '3-6', name: 'طوارئ الكبار', slug: 'adult-emergencies' },
-      { id: '3-7', name: 'الإسعافات الأولية', slug: 'general-first-aid' },
-    ],
-  },
-  {
-    id: 'child-care',
-    name: 'رعاية الطفل',
-    slug: 'child-care',
-    subcategories: [
-      { id: '4-1', name: 'النمو والتطور', slug: 'growth-development' },
-      { id: '4-2', name: 'التغذية', slug: 'child-nutrition' },
-      { id: '4-3', name: 'التطعيمات', slug: 'vaccinations' },
-      { id: '4-4', name: 'الأمراض الشائعة', slug: 'child-common-diseases' },
-      { id: '4-5', name: 'الإسعافات الأولية', slug: 'child-first-aid' },
-      { id: '4-6', name: 'الصحة النفسية', slug: 'child-mental-health' },
-      { id: '4-7', name: 'العناية اليومية', slug: 'daily-care' },
-    ],
-  },
-  {
-    id: 'health-beauty',
-    name: 'الصحة والجمال',
-    slug: 'health-beauty',
-    subcategories: [
-      { id: '5-1', name: 'العناية بالبشرة', slug: 'skincare' },
-      { id: '5-2', name: 'امراض جلدية', slug: 'dermatology' },
-      { id: '5-3', name: 'العناية بالشعر', slug: 'hair-care' },
-      { id: '5-4', name: 'الصحة والغذاء', slug: 'health-diet' },
-      { id: '5-5', name: 'التجميل غير جراحي', slug: 'non-surgical-cosmetic' },
-      { id: '5-6', name: 'التجميل الجراحي', slug: 'surgical-cosmetic' },
-    ],
-  },
 ];
 
 export default function Header() {
@@ -111,12 +45,37 @@ export default function Header() {
   >(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({});
+  const [navigationItems, setNavigationItems] = useState<any[]>(staticNavItems);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
     loadSettings();
+    loadCategories();
   }, []);
+
+  const loadCategories = async () => {
+    try {
+      const categories: any[] = (await apiClient.getCategories()) as any[];
+      const dynamicItems = categories.map((cat: any) => ({
+        id: cat.id,
+        name: cat.name,
+        slug: cat.slug,
+        subcategories:
+          cat.subcategories && cat.subcategories.length > 0
+            ? cat.subcategories.map((sub: any) => ({
+                id: sub.id,
+                name: sub.name,
+                slug: sub.slug,
+              }))
+            : undefined,
+      }));
+      // Show only the first 3 categories in the header nav to avoid overcrowding
+      setNavigationItems([...staticNavItems, ...dynamicItems.slice(0, 3)]);
+    } catch (error) {
+      console.error('Error loading categories:', error);
+    }
+  };
 
   const loadSettings = async () => {
     try {
@@ -236,10 +195,16 @@ export default function Header() {
                 <Facebook className="w-4 h-4" />
               </Link>
               <Link
-                href={settings.twitter_url || '#'}
+                href={settings.tiktok_url || '#'}
                 target="_blank"
                 className="text-gray-400 hover:text-gold-500 transition-all hover:scale-110">
-                <Twitter className="w-4 h-4" />
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.48a8.18 8.18 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.91z" />
+                </svg>
               </Link>
               <Link
                 href={settings.instagram_url || '#'}
@@ -360,7 +325,9 @@ export default function Header() {
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg transition-all text-gray-400 hover:text-gold-500 hover:bg-white/5 border border-white/5"
-                aria-label={isLight ? 'تفعيل الوضع الداكن' : 'تفعيل الوضع الفاتح'}>
+                aria-label={
+                  isLight ? 'تفعيل الوضع الداكن' : 'تفعيل الوضع الفاتح'
+                }>
                 {isLight ? (
                   <Moon className="w-5 h-5" />
                 ) : (

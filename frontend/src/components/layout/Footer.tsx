@@ -7,7 +7,6 @@ import {
   Mail,
   Phone,
   Facebook,
-  Twitter,
   Instagram,
   MapPin,
   Send,
@@ -22,12 +21,23 @@ export default function Footer() {
   const [footerSearchQuery, setFooterSearchQuery] = useState('');
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [footerCategories, setFooterCategories] = useState<any[]>([]);
 
   useEffect(() => {
     loadSettings();
+    loadCategories();
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
+
+  const loadCategories = async () => {
+    try {
+      const categories: any[] = (await apiClient.getCategories()) as any[];
+      setFooterCategories(categories.slice(0, 5));
+    } catch (error) {
+      console.error('Error loading footer categories:', error);
+    }
+  };
 
   const loadSettings = async () => {
     try {
@@ -162,14 +172,17 @@ export default function Footer() {
           <div>
             <Link href="/" className="inline-block mb-6">
               <h2 className="headline-arabic text-3xl font-bold tracking-tight">
-                <span className="text-white">{settings.site_name || 'سونو'}</span>
+                <span className="text-white">
+                  {settings.site_name || 'سونو'}
+                </span>
               </h2>
               <p className="text-xs text-gold-400 tracking-wider mt-1 headline-arabic">
                 {settings.site_slogan || 'الصحه حضارة ... مصر اصلها'}
               </p>
             </Link>
             <p className="text-gray-400 leading-relaxed text-sm mb-6">
-              {settings.site_description || 'مصدرك الموثوق للأخبار الطبية الموثوقة والأبحاث المتطورة والتحليلات من الخبراء. نربط الفجوة بين العلوم الطبية والفهم العام.'}
+              {settings.site_description ||
+                'مصدرك الموثوق للأخبار الطبية الموثوقة والأبحاث المتطورة والتحليلات من الخبراء. نربط الفجوة بين العلوم الطبية والفهم العام.'}
             </p>
             <div className="flex gap-3">
               <a
@@ -179,10 +192,16 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href={settings.twitter_url || '#'}
+                href={settings.tiktok_url || '#'}
                 target="_blank"
                 className="w-10 h-10 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-600 hover:text-white text-gray-400 transition-all hover:shadow-glow-gold">
-                <Twitter className="w-5 h-5" />
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.48a8.18 8.18 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.91z" />
+                </svg>
               </a>
               <a
                 href={settings.instagram_url || '#'}
@@ -205,27 +224,15 @@ export default function Footer() {
               الأقسام الرئيسية
             </h3>
             <ul className="space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/articles?category=medical-library"
-                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  المعرفة الطبية
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/articles?category=child-care"
-                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  رعاية الطفل
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/articles?category=health-beauty"
-                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  الصحة والجمال
-                </Link>
-              </li>
+              {footerCategories.map((cat: any) => (
+                <li key={cat.id}>
+                  <Link
+                    href={`/articles?category=${cat.slug}`}
+                    className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
               <li>
                 <Link
                   href="/articles"
@@ -327,10 +334,14 @@ export default function Footer() {
               className="hover:text-gold-400 transition-colors">
               سياسة الخصوصية
             </Link>
-            <Link href="/terms-of-use" className="hover:text-gold-400 transition-colors">
+            <Link
+              href="/terms-of-use"
+              className="hover:text-gold-400 transition-colors">
               شروط الاستخدام
             </Link>
-            <Link href="/ethics-policy" className="hover:text-gold-400 transition-colors">
+            <Link
+              href="/ethics-policy"
+              className="hover:text-gold-400 transition-colors">
               سياسة الأخلاقيات
             </Link>
             <Link
