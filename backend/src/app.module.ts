@@ -12,6 +12,8 @@ import { UploadModule } from './upload/upload.module';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
 import { TeamModule } from './team/team.module';
 import { SettingsModule } from './settings/settings.module';
+import { HospitalsModule } from './hospitals/hospitals.module';
+import { SpecialtiesModule } from './specialties/specialties.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { SettingsModule } from './settings/settings.module';
     SubcategoriesModule,
     TeamModule,
     SettingsModule,
+    HospitalsModule,
+    SpecialtiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

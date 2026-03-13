@@ -57,3 +57,24 @@ export interface LoginResponse {
   access_token: string;
   user: User;
 }
+
+export interface Specialty {
+  id: string;
+  name: string;
+  slug: string;
+  icon?: string;
+  description?: string;
+  hospitals?: Hospital[];
+}
+
+export interface Hospital {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  thumbnail_url?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  specialty: Specialty;
+}

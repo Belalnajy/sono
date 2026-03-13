@@ -61,6 +61,18 @@ class ApiClient {
     return this.request(`/categories/slug/${slug}`);
   }
 
+  async getSpecialties() {
+    return this.request('/specialties');
+  }
+
+  async getSpecialtyBySlug(slug: string) {
+    return this.request(`/specialties/slug/${slug}`);
+  }
+
+  async getHospitalBySlug(slug: string) {
+    return this.request(`/hospitals/slug/${slug}`);
+  }
+
   async getArticles(params?: {
     status?: string;
     categoryId?: string;

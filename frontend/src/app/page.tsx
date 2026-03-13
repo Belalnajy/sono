@@ -2,7 +2,23 @@ import ArticleCard from '@/components/ui/ArticleCard';
 import { apiClient } from '@/lib/api-client';
 import { Article } from '@/types';
 import { log } from 'console';
-import { ArrowLeft, Clock, User, TrendingUp, Bookmark } from 'lucide-react';
+import {
+  ArrowLeft,
+  Clock,
+  User,
+  TrendingUp,
+  Bookmark,
+  HeartPulse,
+  Activity,
+  Bone,
+  Baby,
+  Brain,
+  Droplets,
+  PersonStanding,
+  Sparkles,
+  Ear,
+  Stethoscope,
+} from 'lucide-react';
 import Link from 'next/link';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
@@ -46,16 +62,28 @@ async function getCategories() {
   }
 }
 
+async function getSpecialties() {
+  try {
+    const specialties = await apiClient.getSpecialties();
+    return specialties as any[];
+  } catch (error) {
+    console.error('Error fetching specialties:', error);
+    return [];
+  }
+}
+
 import HeroSlider from '@/components/ui/HeroSlider';
 
 // ... existing imports ...
 
 export default async function HomePage() {
-  const [articles, featuredArticlesFromApi, categories] = await Promise.all([
-    getArticles(),
-    getFeaturedArticles(),
-    getCategories(),
-  ]);
+  const [articles, featuredArticlesFromApi, categories, specialties] =
+    await Promise.all([
+      getArticles(),
+      getFeaturedArticles(),
+      getCategories(),
+      getSpecialties(),
+    ]);
 
   // Get featured articles
   let featuredArticles = featuredArticlesFromApi;
@@ -331,37 +359,67 @@ export default async function HomePage() {
         <AnimatedSection className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-2 bg-gold-500 text-navy-900 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
-              مجموعتنا الطبية
+              المستشفيات المتخصصة
             </div>
             <h2 className="headline-arabic text-4xl md:text-5xl text-white mb-6">
-              تصفح حسب <span className="text-gold-500">التخصص</span>
+              ابحث عن <span className="text-gold-500">تخصص لحالتك</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              استكشف تغطيتنا الشاملة عبر التخصصات والموضوعات الطبية الأكثر دقة
-              وأهمية
+              ابحث عن المستشفى المناسبة والمركز الطبي المتخصص لحالتك من خلال
+              تصفح التخصصات الطبية
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id || cat.slug}
-                href={`/category/${cat.slug}`}
-                className="group relative overflow-hidden bg-white/5 hover:bg-gold-500 p-8 rounded-[2rem] text-center transition-all duration-500 border border-white/10 hover:border-gold-400 shadow-2xl backdrop-blur-sm">
-                <div className="relative z-10">
-                  <h3 className="font-bold text-xl text-white group-hover:text-navy-900 transition-colors mb-2 headline-arabic">
-                    {cat.name}
-                  </h3>
-                  <div className="w-8 h-1 bg-gold-500/30 group-hover:bg-navy-900/30 mx-auto rounded-full transition-colors mb-3"></div>
-                  <p className="text-xs text-gray-400 group-hover:text-navy-900/70 transition-colors font-medium">
-                    استكشف المحتوى
-                  </p>
-                </div>
+            {specialties.map((spec) => {
+              const Icon = (() => {
+                switch (spec.icon) {
+                  case 'HeartPulse':
+                    return HeartPulse;
+                  case 'Activity':
+                    return Activity;
+                  case 'Bone':
+                    return Bone;
+                  case 'Baby':
+                    return Baby;
+                  case 'Brain':
+                    return Brain;
+                  case 'Droplets':
+                    return Droplets;
+                  case 'PersonStanding':
+                    return PersonStanding;
+                  case 'Sparkles':
+                    return Sparkles;
+                  case 'Ear':
+                    return Ear;
+                  default:
+                    return Stethoscope;
+                }
+              })();
 
-                {/* Decorative Icon or Element */}
-                <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-gold-400/5 rounded-full group-hover:scale-[2] group-hover:bg-navy-900/10 transition-all duration-700"></div>
-              </Link>
-            ))}
+              return (
+                <Link
+                  key={spec.id || spec.slug}
+                  href={`/specialty/${spec.slug}`}
+                  className="group relative overflow-hidden bg-white/5 hover:bg-gold-500 p-8 rounded-[2rem] text-center transition-all duration-500 border border-white/10 hover:border-gold-400 shadow-2xl backdrop-blur-sm">
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 flex items-center justify-center text-gold-400 group-hover:bg-navy-900/10 group-hover:text-navy-900 transition-all duration-500">
+                      <Icon className="w-8 h-8" />
+                    </div>
+                    <h3 className="font-bold text-xl text-white group-hover:text-navy-900 transition-colors mb-2 headline-arabic">
+                      {spec.name}
+                    </h3>
+                    <div className="w-8 h-1 bg-gold-500/30 group-hover:bg-navy-900/30 mx-auto rounded-full transition-colors mb-3"></div>
+                    <p className="text-xs text-gray-400 group-hover:text-navy-900/70 transition-colors font-medium">
+                      ابحث عن المستشفيات
+                    </p>
+                  </div>
+
+                  {/* Decorative Background Element */}
+                  <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-gold-400/5 rounded-full group-hover:scale-[2] group-hover:bg-navy-900/10 transition-all duration-700"></div>
+                </Link>
+              );
+            })}
           </div>
         </AnimatedSection>
       </section>
