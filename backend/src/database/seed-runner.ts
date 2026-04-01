@@ -6,7 +6,6 @@ import { User } from '../users/entities/user.entity';
 import { Category } from '../categories/entities/category.entity';
 import { Subcategory } from '../subcategories/entities/subcategory.entity';
 import { Article } from '../articles/entities/article.entity';
-import { Video } from '../videos/entities/video.entity';
 
 config();
 
@@ -19,7 +18,7 @@ const AppDataSource = new DataSource({
   username: configService.get('DB_USERNAME') || 'postgres',
   password: configService.get('DB_PASSWORD') || 'password',
   database: configService.get('DB_NAME') || 'news_db',
-  entities: [User, Category, Subcategory, Article, Video],
+  entities: [User, Category, Subcategory, Article],
   synchronize: true,
 });
 
