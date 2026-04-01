@@ -4,7 +4,6 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Article } from './articles/entities/article.entity';
 import { Category } from './categories/entities/category.entity';
-import { Video } from './videos/entities/video.entity';
 import { User } from './users/entities/user.entity';
 
 @Controller()
@@ -21,10 +20,9 @@ export class AppController {
 
   @Get('stats')
   async getStats() {
-    const [articles, categories, videos, users, recentActivity] = await Promise.all([
+    const [articles, categories, users, recentActivity] = await Promise.all([
       this.dataSource.getRepository(Article).count(),
       this.dataSource.getRepository(Category).count(),
-      this.dataSource.getRepository(Video).count(),
       this.dataSource.getRepository(User).count(),
       this.dataSource.getRepository(Article).find({
         order: { created_at: 'DESC' },
@@ -36,7 +34,6 @@ export class AppController {
     return {
       articles,
       categories,
-      videos,
       users,
       recentActivity,
     };

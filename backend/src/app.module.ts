@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { VideosModule } from './videos/videos.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -30,7 +29,6 @@ import { SpecialtiesModule } from './specialties/specialties.module';
       synchronize: true, // Set to false in production
       ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     }),
-    VideosModule,
     AuthModule,
     UsersModule,
     CategoriesModule,
