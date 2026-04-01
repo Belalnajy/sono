@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {
   FileText,
   Folder,
-  Video,
   Users,
   Activity,
   Inbox,
@@ -85,12 +84,6 @@ export default function AdminDashboard() {
               color: 'bg-green-50 text-green-600',
             },
             {
-              title: 'الفيديوهات',
-              icon: Video,
-              value: loading ? '-' : stats.videos,
-              color: 'bg-purple-50 text-purple-600',
-            },
-            {
               title: 'المستخدمين',
               icon: Users,
               value: loading ? '-' : stats.users,
@@ -148,22 +141,6 @@ export default function AdminDashboard() {
                   إدارة الأقسام
                 </h3>
                 <p className="text-gray-500 text-sm">تنظيم أقسام الموقع</p>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin/videos"
-              className="group bg-white hover:bg-primary-50 p-8 rounded-2xl border border-gray-100 shadow-elegant hover:shadow-premium transition-all duration-300 flex flex-col items-center text-center gap-4 relative overflow-hidden">
-              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Video className="w-8 h-8" />
-              </div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-700 mb-1">
-                  إدارة الفيديوهات
-                </h3>
-                <p className="text-gray-500 text-sm">
-                  رفع وإدارة مكتبة الفيديو
-                </p>
               </div>
             </Link>
           </div>

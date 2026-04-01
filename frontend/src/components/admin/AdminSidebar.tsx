@@ -6,7 +6,6 @@ import {
   LayoutDashboard,
   FileText,
   Folder,
-  Video,
   LogOut,
   Globe,
   Users,
@@ -54,11 +53,6 @@ export default function AdminSidebar({
       title: 'إدارة الأقسام الفرعية',
       href: '/admin/subcategories',
       icon: Folder,
-    },
-    {
-      title: 'إدارة الفيديوهات',
-      href: '/admin/videos',
-      icon: Video,
     },
     {
       title: 'إدارة الفريق',

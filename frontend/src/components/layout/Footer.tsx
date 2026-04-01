@@ -174,13 +174,6 @@ export default function Footer() {
                   جميع المقالات
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/videos"
-                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  الفيديوهات
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -204,13 +197,7 @@ export default function Footer() {
                   المقالات
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/videos"
-                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  الفيديوهات
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href={isLoggedIn ? '/admin/dashboard' : '/admin'}
