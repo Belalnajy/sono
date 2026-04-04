@@ -21,23 +21,12 @@ export default function Footer() {
   const [footerSearchQuery, setFooterSearchQuery] = useState('');
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [footerCategories, setFooterCategories] = useState<any[]>([]);
 
   useEffect(() => {
     loadSettings();
-    loadCategories();
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
-
-  const loadCategories = async () => {
-    try {
-      const categories: any[] = (await apiClient.getCategories()) as any[];
-      setFooterCategories(categories.slice(0, 5));
-    } catch (error) {
-      console.error('Error loading footer categories:', error);
-    }
-  };
 
   const loadSettings = async () => {
     try {
@@ -94,7 +83,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#0b121e] text-white mt-24 relative overflow-hidden border-t border-white/5">
+    <footer className="bg-[#0b121e] text-white mt-6 relative overflow-hidden border-t border-white/5">
       {/* Architectural Background Elements */}
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px]"></div>
       <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-gold-500/50 via-gold-500 to-gold-500/50"></div>
@@ -158,20 +147,32 @@ export default function Footer() {
               الأقسام الرئيسية
             </h3>
             <ul className="space-y-3 text-sm">
-              {footerCategories.map((cat: any) => (
-                <li key={cat.id}>
-                  <Link
-                    href={`/articles?category=${cat.slug}`}
-                    className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                    {cat.name}
-                  </Link>
-                </li>
-              ))}
               <li>
                 <Link
-                  href="/articles"
+                  href="/"
                   className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
-                  جميع المقالات
+                  الرئيسية
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/articles?category=medical-library"
+                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
+                  المعرفة الطبية
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/articles?category=child-care"
+                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
+                  رعاية الطفل
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/articles?category=health-beauty"
+                  className="text-gray-400 hover:text-gold-400 hover:translate-x-1 transition-all inline-block">
+                  الصحة والجمال
                 </Link>
               </li>
             </ul>

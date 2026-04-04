@@ -395,7 +395,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
 
                 <div
                   className="prose prose-lg md:prose-xl max-w-none 
-                       font-sans
+                       font-sans whitespace-pre-line
                        prose-headings:font-black prose-headings:text-navy-900 prose-headings:mb-6 prose-headings:mt-12
                        prose-h2:text-4xl prose-h2:border-r-4 prose-h2:border-gold-500 prose-h2:pr-6
                        prose-h3:text-2xl

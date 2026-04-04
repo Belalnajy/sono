@@ -46,12 +46,14 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [navigationItems, setNavigationItems] = useState<any[]>(staticNavItems);
+  const [trendingArticles, setTrendingArticles] = useState<any[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
     loadSettings();
     loadCategories();
+    loadTrendingArticles();
   }, []);
 
   const loadCategories = async () => {
@@ -83,6 +85,18 @@ export default function Header() {
       setSettings(data);
     } catch (error) {
       console.error('Error loading settings:', error);
+    }
+  };
+
+  const loadTrendingArticles = async () => {
+    try {
+      const response = await apiClient.getArticles({
+        status: 'published',
+        limit: 10,
+      });
+      setTrendingArticles(response.articles);
+    } catch (error) {
+      console.error('Error loading trending articles:', error);
     }
   };
 
@@ -152,18 +166,28 @@ export default function Header() {
       <div className="bg-[#0b121e] text-white/80 overflow-hidden relative border-b border-white/5 h-10 flex items-center">
         <div className="container mx-auto px-4 flex items-center gap-4">
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse"></div>
-            <span className="font-black text-[10px] uppercase tracking-widest text-gold-500">
-              مباشر
+            <div className="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center shadow-glow-gold scale-75">
+              <TrendingUp className="w-4 h-4 text-white" />
+            </div>
+            <span className="text-gold-400 font-bold text-xs whitespace-nowrap">
+              عاجل:
             </span>
           </div>
           <div className="flex-1 overflow-hidden">
-            <div className="animate-slide-left whitespace-nowrap inline-block text-[11px] font-medium">
-              {(settings.news_ticker || '').split('|').map((msg, idx) => (
-                <span key={idx} className="inline-block px-8">
-                  {msg.trim()}
-                </span>
-              ))}
+            <div className="animate-slide-left whitespace-nowrap inline-flex gap-12 items-center h-full">
+              {trendingArticles.length > 0 ? (
+                trendingArticles.map((article, i) => (
+                  <Link
+                    key={article.id}
+                    href={`/article/${article.slug}`}
+                    className="text-gray-300 hover:text-gold-400 text-xs font-medium transition-colors flex items-center gap-3">
+                    <span className="w-1 h-1 rounded-full bg-gold-500/40"></span>
+                    {article.title}
+                  </Link>
+                ))
+              ) : (
+                <span className="text-gray-500 text-xs">جاري تحميل الأخبار...</span>
+              )}
             </div>
           </div>
         </div>

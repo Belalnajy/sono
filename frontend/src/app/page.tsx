@@ -356,7 +356,7 @@ export default async function HomePage() {
         {/* Decorative Grid Pattern */}
         <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#BF9B50_1px,transparent_1px)] [background-size:40px_40px]"></div>
 
-        <AnimatedSection className="container mx-auto px-4 relative z-10">
+        <AnimatedSection className="container mx-auto px-4 relative z-10 ">
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-2 bg-gold-500 text-navy-900 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
               المستشفيات المتخصصة
@@ -370,7 +370,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {specialties.map((spec) => {
               const Icon = (() => {
                 switch (spec.icon) {
@@ -401,7 +401,7 @@ export default async function HomePage() {
                 <Link
                   key={spec.id || spec.slug}
                   href={`/specialty/${spec.slug}`}
-                  className="group relative overflow-hidden bg-white/5 hover:bg-gold-500 p-8 rounded-[2rem] text-center transition-all duration-500 border border-white/10 hover:border-gold-400 shadow-2xl backdrop-blur-sm">
+                  className="group relative overflow-hidden bg-white/5 hover:bg-gold-500 p-8 rounded-[2rem] text-center transition-all duration-500 border border-white/10 hover:border-gold-400 shadow-2xl backdrop-blur-sm w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]">
                   <div className="relative z-10">
                     <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 flex items-center justify-center text-gold-400 group-hover:bg-navy-900/10 group-hover:text-navy-900 transition-all duration-500">
                       <Icon className="w-8 h-8" />
