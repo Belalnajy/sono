@@ -24,6 +24,15 @@ export class Hospital {
   @Column({ nullable: true })
   phone: string;
 
+  @Column({ nullable: true })
+  working_hours: string;
+
+  @Column('simple-array', { nullable: true })
+  technologies: string[];
+
+  @Column({ nullable: true })
+  website: string;
+
   @ManyToOne(() => Specialty, (specialty) => specialty.hospitals, {
     onDelete: 'CASCADE',
   })

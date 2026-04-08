@@ -76,5 +76,7 @@ export interface Hospital {
   address?: string;
   phone?: string;
   website?: string;
+  working_hours?: string;
+  technologies?: string[];
   specialty: Specialty;
 }
