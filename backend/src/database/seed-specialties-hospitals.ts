@@ -150,7 +150,7 @@ const hospitalsData = [
         desc: 'مستشفى حكومي متطور بيقدم خدمات في تخصصات كتير.',
         working_hours: '24 ساعة',
         technologies: ['جراحات القلب', 'وحدات غسيل كلوي', 'أشعة حديثة'],
-        phone: '16424',
+        phone: '02 24328066 - 16424',
         website: 'http://www.nih.gov.eg',
       },
     ],
