@@ -35,6 +35,13 @@ export class SettingsService implements OnModuleInit {
       { key: 'site_name', value: 'سونو' },
       { key: 'site_slogan', value: 'الصحه حضارة ... مصر اصلها' },
       { key: 'site_description', value: 'مصدرك الموثوق للأخبار الطبية الموثوقة والأبحاث المتطورة والتحليلات من الخبراء. نربط الفجوة بين العلوم الطبية والفهم العام.' },
+      // Editorial Board
+      { key: 'editorial_board_supervision_name1', value: 'أ.د/ نائلة عمارة' },
+      { key: 'editorial_board_supervision_title1', value: 'عميد كلية الاعلام وفنون الاتصال - جامعة فاروس' },
+      { key: 'editorial_board_supervision_name2', value: 'أ.م.د/ إبراهيم التوام' },
+      { key: 'editorial_board_supervision_title2', value: 'رئيس قسم الصحافة والنشر الرقمي - جامعة فاروس' },
+      { key: 'editorial_board_editor_in_chief_name', value: 'د/ جيهان أشرف' },
+      { key: 'editorial_board_editor_in_chief_title', value: 'المدرس بقسم الصحافة والنشر الرقمي - جامعة فاروس' },
     ];
 
     for (const setting of defaultSettings) {

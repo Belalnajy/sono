@@ -13,7 +13,7 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {},
+    options: RequestInit = {}
   ): Promise<T> {
     const isServer = typeof window === 'undefined';
     const baseUrl = isServer ? INTERNAL_API_URL : this.baseURL;
@@ -23,7 +23,7 @@ class ApiClient {
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...(options.headers as Record<string, string>),
+      ...(options.headers as Record<string, string>)
     };
 
     if (token) {
@@ -32,7 +32,7 @@ class ApiClient {
 
     const response = await fetch(url, {
       ...options,
-      headers,
+      headers
     });
 
     if (!response.ok) {
@@ -40,7 +40,7 @@ class ApiClient {
         .json()
         .catch(() => ({ message: 'An error occurred' }));
       throw new Error(
-        error.message || `HTTP error! status: ${response.status}`,
+        error.message || `HTTP error! status: ${response.status}`
       );
     }
 
@@ -119,7 +119,7 @@ class ApiClient {
   async login(username: string, password: string) {
     return this.request('/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password })
     });
   }
 
@@ -131,20 +131,20 @@ class ApiClient {
   async createCategory(data: { name: string; slug: string }) {
     return this.request('/categories', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async updateCategory(id: string, data: { name?: string; slug?: string }) {
     return this.request(`/categories/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async deleteCategory(id: string) {
     return this.request(`/categories/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
   }
 
@@ -155,7 +155,7 @@ class ApiClient {
   }) {
     return this.request('/subcategories', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
@@ -169,50 +169,50 @@ class ApiClient {
 
   async updateSubcategory(
     id: string,
-    data: { name?: string; slug?: string; categoryId?: string },
+    data: { name?: string; slug?: string; categoryId?: string }
   ) {
     return this.request(`/subcategories/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async deleteSubcategory(id: string) {
     return this.request(`/subcategories/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
   }
 
   async createArticle(data: any) {
     return this.request('/articles', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async updateArticle(id: string, data: any) {
     return this.request(`/articles/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async deleteArticle(id: string) {
     return this.request(`/articles/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
   }
 
   async createVideo(data: any) {
     return this.request('/videos', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async deleteVideo(id: string) {
     return this.request(`/videos/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
   }
 
@@ -230,7 +230,7 @@ class ApiClient {
     const response = await fetch(`${this.baseURL}/upload/image`, {
       method: 'POST',
       headers,
-      body: formData,
+      body: formData
     });
 
     if (!response.ok) {
@@ -247,20 +247,20 @@ class ApiClient {
   async createTeamMember(data: any) {
     return this.request('/team', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async updateTeamMember(id: string, data: any) {
     return this.request(`/team/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async deleteTeamMember(id: string) {
     return this.request(`/team/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     });
   }
 
@@ -271,7 +271,7 @@ class ApiClient {
   async updateSettings(settings: Record<string, string>) {
     return this.request('/settings', {
       method: 'PATCH',
-      body: JSON.stringify(settings),
+      body: JSON.stringify(settings)
     });
   }
 }

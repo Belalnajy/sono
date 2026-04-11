@@ -19,6 +19,7 @@ import ConfirmationModal from '@/components/ui/ConfirmationModal';
 export default function TeamManagement() {
   const [members, setMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'all' | 'editorial' | 'members'>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<any | null>(null);
   const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ export default function TeamManagement() {
     role: '',
     imageUrl: '',
     order: 0,
+    type: 'member',
   });
   const [uploading, setUploading] = useState(false);
 
@@ -82,7 +84,7 @@ export default function TeamManagement() {
       }
       setIsModalOpen(false);
       setEditingMember(null);
-      setFormData({ name: '', role: '', imageUrl: '', order: 0 });
+      setFormData({ name: '', role: '', imageUrl: '', order: 0, type: 'member' });
       loadMembers();
     } catch (error: any) {
       toast.error('حدث خطأ: ' + error.message);
@@ -96,6 +98,7 @@ export default function TeamManagement() {
       role: member.role || '',
       imageUrl: member.imageUrl,
       order: member.order || 0,
+      type: member.type || 'member',
     });
     setIsModalOpen(true);
   };
@@ -201,6 +204,21 @@ export default function TeamManagement() {
                   className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  نوع العضو
+                </label>
+                <select
+                  value={formData.type}
+                  onChange={(e) =>
+                    setFormData({ ...formData, type: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-primary-500 outline-none">
+                  <option value="member">عضو فريق (عقول سونو)</option>
+                  <option value="supervision">إشراف عام</option>
+                  <option value="editor_in_chief">رئيس التحرير</option>
+                </select>
+              </div>
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   الصورة
@@ -265,7 +283,13 @@ export default function TeamManagement() {
           <button
             onClick={() => {
               setEditingMember(null);
-              setFormData({ name: '', role: '', imageUrl: '', order: 0 });
+              setFormData({ 
+                name: '', 
+                role: '', 
+                imageUrl: '', 
+                order: 0, 
+                type: activeTab === 'editorial' ? 'supervision' : 'member' 
+              });
               setIsModalOpen(true);
             }}
             className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-xl transition font-medium shadow-lg hover:shadow-accent-500/30 border border-accent-400 flex items-center gap-2">
@@ -273,6 +297,51 @@ export default function TeamManagement() {
             <span>إضافة عضو جديد</span>
           </button>
         </div>
+
+        {/* Tabs */}
+        <div className="flex bg-white p-1 rounded-2xl shadow-sm border border-gray-100 mb-8 max-w-lg">
+          <button
+            onClick={() => setActiveTab('all')}
+            className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              activeTab === 'all'
+                ? 'bg-primary-900 text-white shadow-lg'
+                : 'text-gray-500 hover:bg-gray-50'
+            }`}>
+            الكل
+          </button>
+          <button
+            onClick={() => setActiveTab('editorial')}
+            className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              activeTab === 'editorial'
+                ? 'bg-primary-900 text-white shadow-lg'
+                : 'text-gray-500 hover:bg-gray-50'
+            }`}>
+            هيئة التحرير (إشراف/رئيس)
+          </button>
+          <button
+            onClick={() => setActiveTab('members')}
+            className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all ${
+              activeTab === 'members'
+                ? 'bg-primary-900 text-white shadow-lg'
+                : 'text-gray-500 hover:bg-gray-50'
+            }`}>
+            أعضاء الفريق
+          </button>
+        </div>
+
+        {activeTab === 'editorial' && members.filter(m => m.type !== 'member').length === 0 && (
+          <div className="mb-8 p-6 bg-blue-50 rounded-2xl border border-blue-100 flex items-start gap-4">
+            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+              <Users className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="font-bold text-blue-900 mb-1">إضافة هيئة التحرير بالصور</h4>
+              <p className="text-blue-700 text-sm leading-relaxed">
+                لإضافة المشرفين العامين أو رئيس التحرير بصورهم، قم بالضغط على "إضافة عضو جديد" ثم اختر "إشراف عام" أو "رئيس التحرير" من قائمة "نوع العضو" بالأسفل.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Members List */}
         <div className="bg-white rounded-2xl shadow-elegant border border-gray-100 overflow-hidden">
@@ -289,13 +358,23 @@ export default function TeamManagement() {
                   <th className="px-6 py-4 text-right text-sm font-bold text-gray-900 uppercase tracking-wider">
                     الترتيب
                   </th>
+                  <th className="px-6 py-4 text-right text-sm font-bold text-gray-900 uppercase tracking-wider">
+                    النوع
+                  </th>
                   <th className="px-6 py-4 text-center text-sm font-bold text-gray-900 uppercase tracking-wider">
                     إجراءات
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {members.map((member) => (
+                {members
+                  .filter((member) => {
+                    if (activeTab === 'all') return true;
+                    if (activeTab === 'editorial') return member.type === 'supervision' || member.type === 'editor_in_chief';
+                    if (activeTab === 'members') return member.type === 'member' || !member.type;
+                    return true;
+                  })
+                  .map((member) => (
                   <tr
                     key={member.id}
                     className="hover:bg-gray-50/50 transition-colors group">
@@ -316,6 +395,13 @@ export default function TeamManagement() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-500 font-mono">
                       {member.order}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-gray-500 text-xs font-bold">
+                      {member.type === 'supervision'
+                        ? 'إشراف عام'
+                        : member.type === 'editor_in_chief'
+                        ? 'رئيس تحرير'
+                        : 'عضو فريق'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                       <div className="flex items-center justify-center gap-2">

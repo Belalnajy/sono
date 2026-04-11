@@ -8,7 +8,7 @@ import {
   Folder,
   LogOut,
   Globe,
-  Users,
+  Users
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -19,7 +19,7 @@ interface AdminSidebarProps {
 
 export default function AdminSidebar({
   className = '',
-  onLinkClick,
+  onLinkClick
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -37,33 +37,33 @@ export default function AdminSidebar({
     {
       title: 'لوحة التحكم',
       href: '/admin/dashboard',
-      icon: LayoutDashboard,
+      icon: LayoutDashboard
     },
     {
       title: 'إدارة المقالات',
       href: '/admin/articles',
-      icon: FileText,
+      icon: FileText
     },
     {
       title: 'إدارة الأقسام',
       href: '/admin/categories',
-      icon: Folder,
+      icon: Folder
     },
     {
       title: 'إدارة الأقسام الفرعية',
       href: '/admin/subcategories',
-      icon: Folder,
+      icon: Folder
     },
     {
       title: 'إدارة الفريق',
       href: '/admin/team',
-      icon: Users,
+      icon: Users
     },
     {
       title: 'الإعدادات',
       href: '/admin/settings',
-      icon: Globe,
-    },
+      icon: Globe
+    }
   ];
 
   return (

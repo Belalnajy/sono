@@ -89,6 +89,12 @@ export default function AdminDashboard() {
               value: loading ? '-' : stats.users,
               color: 'bg-orange-50 text-orange-600',
             },
+            {
+              title: 'أعضاء الفريق',
+              icon: Users,
+              value: loading ? '-' : stats.team || 0,
+              color: 'bg-purple-50 text-purple-600',
+            },
           ].map((stat, idx) => (
             <div
               key={idx}
@@ -141,6 +147,20 @@ export default function AdminDashboard() {
                   إدارة الأقسام
                 </h3>
                 <p className="text-gray-500 text-sm">تنظيم أقسام الموقع</p>
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/team"
+              className="group bg-white hover:bg-primary-50 p-8 rounded-2xl border border-gray-100 shadow-elegant hover:shadow-premium transition-all duration-300 flex flex-col items-center text-center gap-4 relative overflow-hidden">
+              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8" />
+              </div>
+              <div className="relative z-10">
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-700 mb-1">
+                  إدارة الفريق هـ. التحرير
+                </h3>
+                <p className="text-gray-500 text-sm">إدارة أعضاء الفريق وهيئة التحرير</p>
               </div>
             </Link>
           </div>

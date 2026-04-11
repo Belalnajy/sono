@@ -13,17 +13,28 @@ import {
   Baby,
   Stethoscope,
   Leaf,
-  ArrowLeft,
+  ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api-client';
 
 export default function AboutUsPage() {
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [settings, setSettings] = useState<Record<string, string>>({});
 
   useEffect(() => {
     loadTeam();
+    loadSettings();
   }, []);
+
+  const loadSettings = async () => {
+    try {
+      const data = await apiClient.getSettings();
+      setSettings(data);
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    }
+  };
 
   const loadTeam = async () => {
     try {
@@ -34,18 +45,21 @@ export default function AboutUsPage() {
     }
   };
 
+  const supervisionMembers = teamMembers.filter((m) => m.type === 'supervision');
+  const editorInChiefMembers = teamMembers.filter(
+    (m) => m.type === 'editor_in_chief'
+  );
+  const regularMembers = teamMembers.filter(
+    (m) => m.type === 'member' || !m.type
+  );
+
   return (
     <div className="min-h-screen bg-soft-tint">
-      {/* Hero Section - Deep Navy Premium Design */}
       <section className="hero-section relative pt-40 pb-32 overflow-hidden bg-[#0b121e]">
-        {/* Architectural Background Elements */}
         <div className="hero-overlay absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#1e293b,transparent_40%)]"></div>
         <div className="hero-overlay absolute top-0 right-0 w-full h-full bg-[linear-gradient(to_bottom,transparent,rgba(11,18,30,0.8),#0b121e)] z-0"></div>
-
-        {/* Animated Orbs */}
         <div className="hero-orb absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
         <div className="hero-orb absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-skyblue-500/10 rounded-full blur-[100px] -z-10"></div>
-
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection variant="fadeDown">
             <div className="max-w-4xl mx-auto text-center">
@@ -56,7 +70,6 @@ export default function AboutUsPage() {
                 </span>
                 <span className="w-12 h-1.5 bg-gold-500 rounded-full"></span>
               </div>
-
               <h1 className="headline-arabic text-5xl md:text-7xl lg:text-8xl text-white font-black mb-8 leading-none">
                 سونو -{' '}
                 <span className="text-gold-500 underline decoration-white/10 decoration-8 underline-offset-12">
@@ -64,12 +77,10 @@ export default function AboutUsPage() {
                 </span>{' '}
                 الصحي
               </h1>
-
               <p className="text-xl md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto font-medium">
                 سونو هو الكيان الطبي المصري الرائد، نجمع بين عراقة العلم الحديث
                 ودقة المحتوى الموثق لنصحبك في رحلة واعية نحو حياة أفضل
               </p>
-
               <div className="flex items-center justify-center gap-6 mt-16">
                 <div className="bg-white/5 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/10">
                   <span className="block text-gold-500 font-black text-2xl mb-1">
@@ -93,15 +104,13 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Story Section - Elegant White Card */}
+
       <section className="container mx-auto px-4 py-32 relative">
         <div className="absolute top-0 right-1/4 w-px h-64 bg-gradient-to-b from-gold-500/30 to-transparent"></div>
-
         <AnimatedSection>
           <div className="max-w-5xl mx-auto">
             <div className="bg-white rounded-[3.5rem] shadow-premium p-10 md:p-20 border border-gray-100 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-
               <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-[#0b121e] flex items-center justify-center shadow-2xl flex-shrink-0 rotate-3">
                   <Heart className="w-10 h-10 md:w-14 md:h-14 text-gold-500" />
@@ -112,27 +121,18 @@ export default function AboutUsPage() {
                   </h2>
                   <div className="space-y-6 text-gray-600 leading-relaxed text-xl font-medium">
                     <p>
-                      استلهمنا اسم{' '}
-                      <span className="text-navy-900 font-black border-b-2 border-gold-200">
-                        سونو
-                      </span>{' '}
-                      من الطبيب المصري القديم، رمز العلم والحكمة الخالدة.
+                      استلهمنا اسم <span className="text-navy-900 font-black border-b-2 border-gold-200">سونو</span> من الطبيب المصري القديم، رمز العلم والحكمة الخالدة.
                     </p>
                     <p>
-                      في سونو، نحن لا ننشر مجرد مقالات، بل نبني جسراً من الثقة
-                      بين المريض والمعلومة الطبية الصحيحة، معتمدين على نخبة من
-                      الأطباء المتخصصين لنضمن لك أعلى معايير الدقة العلمية.
+                      في سونو، نحن لا ننشر مجرد مقالات، بل نبني جسراً من الثقة بين المريض والمعلومة الطبية الصحيحة، معتمدين على نخبة من الأطباء المتخصصين لنضمن لك أعلى معايير الدقة العلمية.
                     </p>
                   </div>
                 </div>
               </div>
-
               <div className="mt-16 p-8 md:p-12 bg-gray-50 rounded-[2.5rem] border border-gray-100 text-center relative group">
                 <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#BF9B50_1px,transparent_1px)] [background-size:20px_20px]"></div>
                 <p className="text-3xl md:text-4xl font-black text-navy-900 leading-tight relative z-10">
-                  "المعلومة الطبية الدقيقة هي{' '}
-                  <span className="text-gold-500 italic">السلاح الأول</span>{' '}
-                  لحياة أكثر صحة"
+                  "المعلومة الطبية الدقيقة هي <span className="text-gold-500 italic">السلاح الأول</span> لحياة أكثر صحة"
                 </p>
               </div>
             </div>
@@ -140,12 +140,10 @@ export default function AboutUsPage() {
         </AnimatedSection>
       </section>
 
-      {/* Vision & Mission - Symmetrical Grid */}
       <section className="bg-white py-32 border-y border-gray-100 relative overflow-hidden">
         <div className="absolute top-1/2 left-0 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl -translate-y-1/2"></div>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
-            {/* Vision */}
             <AnimatedSection delay={0.1} variant="fadeUp">
               <div className="bg-soft-tint rounded-[3rem] p-12 shadow-elegant hover:shadow-premium transition-all duration-500 border border-gray-100 group h-full relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -154,18 +152,12 @@ export default function AboutUsPage() {
                 <div className="w-20 h-20 rounded-2xl bg-navy-900 flex items-center justify-center mb-8 shadow-2xl group-hover:rotate-6 transition-transform">
                   <Target className="w-10 h-10 text-gold-500" />
                 </div>
-                <h3 className="headline-arabic text-3xl font-black text-navy-900 mb-6">
-                  رؤيتنا
-                </h3>
+                <h3 className="headline-arabic text-3xl font-black text-navy-900 mb-6">رؤيتنا</h3>
                 <p className="text-gray-500 leading-relaxed text-xl font-medium">
-                  نسعى لأن يكون سونو المرجع الصحي الأول والموثوق في منطقة الشرق
-                  الأوسط، نضع معايير جديدة للوعي الطبي الرقمي ونساهم في بناء
-                  مجتمع عربي يتمتع بالثقافة الصحية اللازمة للوقاية والنمو.
+                  نسعى لأن يكون سونو المرجع الصحي الأول والموثوق في منطقة الشرق الأوسط، نضع معايير جديدة للوعي الطبي الرقمي ونساهم في بناء مجتمع عربي يتمتع بالثقافة الصحية اللازمة للوقاية والنمو.
                 </p>
               </div>
             </AnimatedSection>
-
-            {/* Mission */}
             <AnimatedSection delay={0.2} variant="fadeUp">
               <div className="bg-soft-tint rounded-[3rem] p-12 shadow-elegant hover:shadow-premium transition-all duration-500 border border-gray-100 group h-full relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -174,14 +166,9 @@ export default function AboutUsPage() {
                 <div className="w-20 h-20 rounded-2xl bg-gold-500 flex items-center justify-center mb-8 shadow-2xl group-hover:-rotate-6 transition-transform">
                   <Award className="w-10 h-10 text-navy-900" />
                 </div>
-                <h3 className="headline-arabic text-3xl font-black text-navy-900 mb-6">
-                  رسالتنا
-                </h3>
+                <h3 className="headline-arabic text-3xl font-black text-navy-900 mb-6">رسالتنا</h3>
                 <p className="text-gray-500 leading-relaxed text-xl font-medium">
-                  تمكين القارئ العربي من خلال تقديم محتوى طبي احترافي، مبسط،
-                  ومدعوم بالأدلة العلمية. نؤمن بمسؤوليتنا في مراجعة كل تفصيلة
-                  طبية لنقدم لك الأمان والاطمئنان في كل معلومة تقرأها عبر
-                  منصتنا.
+                  تمكين القارئ العربي من خلال تقديم محتوى طبي احترافي، مبسط، ومدعوم بالأدلة العلمية. نؤمن بمسؤوليتنا في مراجعة كل تفصيلة طبية لنقدم لك الأمان والاطمئنان في كل معلومة تقرأها عبر منصتنا.
                 </p>
               </div>
             </AnimatedSection>
@@ -189,14 +176,140 @@ export default function AboutUsPage() {
         </div>
       </section>
 
+      {/* Editorial Board Section */}
+      <section className="bg-white py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {/* General Supervision */}
+              <div className="bg-soft-tint rounded-[2.5rem] p-10 border border-gray-100 shadow-elegant relative group h-fit">
+                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Shield className="w-24 h-24 text-navy-900" />
+                </div>
+                <h3 className="text-gold-600 font-black text-xs uppercase tracking-[0.3em] mb-10 block">
+                  إشراف عام
+                </h3>
+
+                <div className="space-y-12">
+                  {supervisionMembers.length > 0 ? (
+                    supervisionMembers.map((member, idx) => (
+                      <div key={member.id} className="relative z-10">
+                        <div className="flex items-center gap-6">
+                          {member.imageUrl && (
+                            <img
+                              src={member.imageUrl}
+                              alt={member.name}
+                              className="w-20 h-20 rounded-2xl object-cover shadow-lg border-2 border-white ring-1 ring-gray-100"
+                            />
+                          )}
+                          <div>
+                            <h4 className="text-2xl font-black text-navy-900 mb-1">
+                              {member.name}
+                            </h4>
+                            <p className="text-gold-600 font-bold text-sm mb-1 uppercase tracking-wider">
+                              {member.role}
+                            </p>
+                          </div>
+                        </div>
+                        {idx < supervisionMembers.length - 1 && (
+                          <div className="h-px bg-gray-200 mt-10"></div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <>
+                      <div className="relative z-10">
+                        <h4 className="text-2xl font-black text-navy-900 mb-2">
+                          {settings.editorial_board_supervision_name1 ||
+                            'أ.د/ نائلة عمارة'}
+                        </h4>
+                        <p className="text-gray-500 font-medium leading-relaxed">
+                          {settings.editorial_board_supervision_title1 ||
+                            'عميد كلية الاعلام وفنون الاتصال - جامعة فاروس'}
+                        </p>
+                      </div>
+                      <div className="h-px bg-gray-200"></div>
+                      <div className="relative z-10">
+                        <h4 className="text-2xl font-black text-navy-900 mb-2">
+                          {settings.editorial_board_supervision_name2 ||
+                            'أ.م.د/ إبراهيم التوام'}
+                        </h4>
+                        <p className="text-gray-500 font-medium leading-relaxed">
+                          {settings.editorial_board_supervision_title2 ||
+                            'رئيس قسم الصحافة والنشر الرقمي - جامعة فاروس'}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Editor-in-Chief */}
+              <div className="bg-navy-900 rounded-[2.5rem] p-10 border border-white/5 shadow-2xl relative group overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+
+                <h3 className="text-gold-500 font-black text-xs uppercase tracking-[0.3em] mb-10 block">
+                  رئيس التحرير
+                </h3>
+
+                <div className="relative z-10 space-y-8">
+                  {editorInChiefMembers.length > 0 ? (
+                    editorInChiefMembers.map((member) => (
+                      <div key={member.id} className="group/member">
+                        <div className="flex flex-col gap-6">
+                          {member.imageUrl && (
+                            <div className="relative w-32 h-32 rounded-3xl overflow-hidden border-2 border-gold-500/30 group-hover/member:border-gold-500 transition-colors">
+                              <img
+                                src={member.imageUrl}
+                                alt={member.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                          <div>
+                            <h4 className="text-3xl font-black text-white mb-2">
+                              {member.name}
+                            </h4>
+                            <p className="text-gold-500 text-lg font-medium leading-relaxed">
+                              {member.role}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="mt-12">
+                      <h4 className="text-3xl font-black text-white mb-3">
+                        {settings.editorial_board_editor_in_chief_name ||
+                          'د/ جيهان أشرف'}
+                      </h4>
+                      <p className="text-gray-400 text-lg font-medium leading-relaxed">
+                        {settings.editorial_board_editor_in_chief_title ||
+                          'المدرس بقسم الصحافة والنشر الرقمي - جامعة فاروس'}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-12 flex justify-end">
+                  <div className="w-16 h-16 rounded-2xl bg-gold-500/20 flex items-center justify-center border border-gold-500/30">
+                    <BookOpen className="w-8 h-8 text-gold-500" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Team Section - Premium Staggered Look */}
-      {teamMembers.length > 0 && (
+      {regularMembers.length > 0 && (
         <section className="bg-soft-tint py-32 relative">
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-24 relative">
                 <h2 className="headline-arabic text-4xl md:text-5xl font-black text-navy-900 mb-4">
-                  عقول سونو <span className="text-gold-500">المبدعة</span>
+                  هيئة تحرير <span className="text-gold-500">سونو</span>
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6 font-medium">
                   نحن مجموعة من المتخصصين المتحمسين لنشر الوعي الصحي
@@ -205,7 +318,7 @@ export default function AboutUsPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
-                {teamMembers.map((member, index) => (
+                {regularMembers.map((member, index) => (
                   <AnimatedSection
                     key={member.id}
                     delay={0.1 * index}

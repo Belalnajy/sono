@@ -23,6 +23,9 @@ export class TeamMember {
   @Column({ default: 0 })
   order: number;
 
+  @Column({ default: 'member' })
+  type: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

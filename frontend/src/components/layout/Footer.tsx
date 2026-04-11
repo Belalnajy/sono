@@ -83,7 +83,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#0b121e] text-white mt-6 relative overflow-hidden border-t border-white/5">
+    <footer className="bg-[#0b121e] text-white  relative overflow-hidden border-t border-white/5">
       {/* Architectural Background Elements */}
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px]"></div>
       <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-gold-500/50 via-gold-500 to-gold-500/50"></div>

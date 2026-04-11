@@ -271,8 +271,8 @@ export default function Header() {
                   <div className="absolute inset-0 bg-gold-500 blur-xl opacity-0 group-hover/logo:opacity-30 transition-opacity"></div>
                   <img
                     src="/logo.png"
-                    className={`relative transition-all duration-500 rounded-xl ${
-                      isScrolled ? 'w-10 h-10' : 'w-14 h-14'
+                    className={`relative transition-all duration-500 rounded-xl overflow-hidden object-contain ${
+                      isScrolled ? 'w-12 h-12 md:w-14 md:h-14' : 'w-16 h-16 md:w-24 md:h-24'
                     }`}
                     alt="سونو"
                   />

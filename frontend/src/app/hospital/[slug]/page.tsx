@@ -29,7 +29,9 @@ export default async function HospitalPage({
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">المستشفى غير موجودة</h1>
-          <Link href="/" className="text-gold-500 hover:underline">العودة للرئيسية</Link>
+          <Link href="/" className="text-gold-500 hover:underline">
+            العودة للرئيسية
+          </Link>
         </div>
       </div>
     );
@@ -87,9 +89,13 @@ export default async function HospitalPage({
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {hospital.technologies.map((tech, index) => (
-                      <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-50">
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-50">
                         <div className="w-2 h-2 rounded-full bg-gold-400"></div>
-                        <span className="headline-arabic text-gray-700">{tech}</span>
+                        <span className="headline-arabic text-gray-700">
+                          {tech}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -98,14 +104,8 @@ export default async function HospitalPage({
             )}
 
             {/* Features/Stats Section (Visual Polish) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            <div className="grid  gap-8 mt-10 ">
               {[
-                {
-                  icon: Clock,
-                  label: 'رعاية متميزة',
-                  sub: hospital.working_hours || '24/7 طوارئ',
-                },
-                { icon: Calendar, label: 'تحديد مواعيد', sub: 'سهولة الحجز' },
                 {
                   icon: Stethoscope,
                   label: 'أحدث التقنيات',
@@ -179,8 +179,10 @@ export default async function HospitalPage({
                         ساعات العمل
                       </p>
                       <div className="flex items-start gap-2">
-                         <Clock className="w-4 h-4 text-gold-500 mt-1 flex-shrink-0" />
-                         <span className="text-lg font-medium leading-relaxed">{hospital.working_hours}</span>
+                        <Clock className="w-4 h-4 text-gold-500 mt-1 flex-shrink-0" />
+                        <span className="text-lg font-medium leading-relaxed">
+                          {hospital.working_hours}
+                        </span>
                       </div>
                     </div>
                   )}

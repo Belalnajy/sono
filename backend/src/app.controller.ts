@@ -5,6 +5,7 @@ import { DataSource } from 'typeorm';
 import { Article } from './articles/entities/article.entity';
 import { Category } from './categories/entities/category.entity';
 import { User } from './users/entities/user.entity';
+import { TeamMember } from './team/team.entity';
 
 @Controller()
 export class AppController {
@@ -20,10 +21,11 @@ export class AppController {
 
   @Get('stats')
   async getStats() {
-    const [articles, categories, users, recentActivity] = await Promise.all([
+    const [articles, categories, users, team, recentActivity] = await Promise.all([
       this.dataSource.getRepository(Article).count(),
       this.dataSource.getRepository(Category).count(),
       this.dataSource.getRepository(User).count(),
+      this.dataSource.getRepository(TeamMember).count(),
       this.dataSource.getRepository(Article).find({
         order: { created_at: 'DESC' },
         take: 5,
@@ -35,6 +37,7 @@ export class AppController {
       articles,
       categories,
       users,
+      team,
       recentActivity,
     };
   }

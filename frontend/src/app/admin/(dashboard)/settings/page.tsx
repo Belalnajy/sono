@@ -14,6 +14,7 @@ import {
   Mail,
   Phone,
   Building2,
+  Users
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
@@ -35,6 +36,13 @@ export default function SettingsPage() {
     site_name: '',
     site_slogan: '',
     site_description: '',
+    // Editorial Board
+    editorial_board_supervision_name1: '',
+    editorial_board_supervision_title1: '',
+    editorial_board_supervision_name2: '',
+    editorial_board_supervision_title2: '',
+    editorial_board_editor_in_chief_name: '',
+    editorial_board_editor_in_chief_title: ''
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -346,6 +354,43 @@ export default function SettingsPage() {
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:bg-white transition-all text-left dir-ltr"
                   />
                 </div>
+              </div>
+            </div>
+
+            {/* Editorial Board Section */}
+            <div className="pt-8 border-t border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    هيئة التحرير (صور وبيانات)
+                  </h2>
+                  <p className="text-gray-500 text-sm mt-0.5">
+                    إدارة بيانات الإشراف العام ورئيس التحرير بصورهم
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-blue-50/50 p-8 rounded-3xl border border-blue-100/50 flex flex-col items-center text-center gap-6">
+                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-blue-600 border border-blue-100">
+                  <Globe className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-blue-900 mb-2">
+                    التحكم المتقدم في هيئة التحرير
+                  </h3>
+                  <p className="text-blue-700 text-sm max-w-md mx-auto leading-relaxed">
+                    تم نقل إدارة هيئة التحرير (الإشراف العام ورئيس التحرير) إلى قسم إدارة الفريق لتتمكن من إضافة صورهم الشخصية والتحكم الكامل في بياناتهم.
+                  </p>
+                </div>
+                <Link
+                  href="/admin/team"
+                  className="bg-primary-900 text-white px-8 py-3.5 rounded-2xl font-bold shadow-lg shadow-primary-900/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  اذهب لإدارة هيئة التحرير بالصور
+                </Link>
               </div>
             </div>
 
