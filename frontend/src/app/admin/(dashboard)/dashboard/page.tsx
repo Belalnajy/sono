@@ -18,6 +18,7 @@ export default function AdminDashboard() {
     categories: 0,
     videos: 0,
     users: 0,
+    team: 0,
     recentActivity: [],
   });
   const [loading, setLoading] = useState(true);
