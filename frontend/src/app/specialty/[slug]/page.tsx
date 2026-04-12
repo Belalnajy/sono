@@ -1,8 +1,9 @@
 import { apiClient } from '@/lib/api-client';
 import {
   ArrowLeft,
-  MapPin,
   Phone,
+  Globe,
+  Zap,
   Hospital as HospitalIcon,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -61,24 +62,59 @@ export default async function SpecialtyPage({
                     {hospital.name}
                   </h3>
 
-                  <div className="space-y-4 mb-8">
-                    {hospital.address && (
-                      <div className="flex items-center gap-3 text-gray-500 text-sm">
-                        <MapPin className="w-4 h-4 text-gold-500 flex-shrink-0" />
-                        <span className="line-clamp-1">{hospital.address}</span>
-                      </div>
-                    )}
-                    {hospital.phone && (
-                      <div className="flex items-center gap-3 text-gray-500 text-sm">
-                        <Phone className="w-4 h-4 text-gold-500 flex-shrink-0" />
-                        <span>{hospital.phone}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-gray-500 text-sm line-clamp-3 mb-8 leading-relaxed headline-arabic">
+                  <p className="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed headline-arabic">
                     {hospital.description.replace(/<[^>]*>/g, '')}
                   </p>
+
+                  {/* Technologies */}
+                  {hospital.technologies && hospital.technologies.length > 0 && (
+                    <div className="mb-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Zap className="w-4 h-4 text-gold-500" />
+                        <span className="text-xs font-bold text-navy-900 headline-arabic">أحدث التقنيات</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {hospital.technologies.slice(0, 3).map((tech: string, i: number) => (
+                          <span
+                            key={i}
+                            className="bg-navy-900/5 text-navy-800 text-[11px] font-medium px-3 py-1.5 rounded-xl headline-arabic">
+                            {tech}
+                          </span>
+                        ))}
+                        {hospital.technologies.length > 3 && (
+                          <span className="bg-gold-500/10 text-gold-600 text-[11px] font-bold px-3 py-1.5 rounded-xl">
+                            +{hospital.technologies.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Contact Info: Phone & Website */}
+                  <div className="space-y-3 mb-8 pt-4 border-t border-gray-100">
+                    {hospital.phone && (
+                      <a
+                        href={`tel:${hospital.phone}`}
+                        className="flex items-center gap-3 text-gray-600 text-sm hover:text-gold-600 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                          <Phone className="w-4 h-4 text-gold-500" />
+                        </div>
+                        <span dir="ltr" className="font-medium">{hospital.phone}</span>
+                      </a>
+                    )}
+                    {hospital.website && (
+                      <a
+                        href={hospital.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 text-gray-600 text-sm hover:text-gold-600 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                          <Globe className="w-4 h-4 text-gold-500" />
+                        </div>
+                        <span className="font-medium headline-arabic">زيارة الموقع</span>
+                      </a>
+                    )}
+                  </div>
 
                   <Link
                     href={`/hospital/${hospital.slug}`}

@@ -194,22 +194,13 @@ export default function AboutUsPage() {
                   {supervisionMembers.length > 0 ? (
                     supervisionMembers.map((member, idx) => (
                       <div key={member.id} className="relative z-10">
-                        <div className="flex items-center gap-6">
-                          {member.imageUrl && (
-                            <img
-                              src={member.imageUrl}
-                              alt={member.name}
-                              className="w-20 h-20 rounded-2xl object-cover shadow-lg border-2 border-white ring-1 ring-gray-100"
-                            />
-                          )}
-                          <div>
-                            <h4 className="text-2xl font-black text-navy-900 mb-1">
-                              {member.name}
-                            </h4>
-                            <p className="text-gold-600 font-bold text-sm mb-1 uppercase tracking-wider">
-                              {member.role}
-                            </p>
-                          </div>
+                        <div>
+                          <h4 className="text-2xl font-black text-navy-900 mb-1">
+                            {member.name}
+                          </h4>
+                          <p className="text-gold-600 font-bold text-sm mb-1 uppercase tracking-wider">
+                            {member.role}
+                          </p>
                         </div>
                         {idx < supervisionMembers.length - 1 && (
                           <div className="h-px bg-gray-200 mt-10"></div>
@@ -256,24 +247,13 @@ export default function AboutUsPage() {
                   {editorInChiefMembers.length > 0 ? (
                     editorInChiefMembers.map((member) => (
                       <div key={member.id} className="group/member">
-                        <div className="flex flex-col gap-6">
-                          {member.imageUrl && (
-                            <div className="relative w-32 h-32 rounded-3xl overflow-hidden border-2 border-gold-500/30 group-hover/member:border-gold-500 transition-colors">
-                              <img
-                                src={member.imageUrl}
-                                alt={member.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                          <div>
-                            <h4 className="text-3xl font-black text-white mb-2">
-                              {member.name}
-                            </h4>
-                            <p className="text-gold-500 text-lg font-medium leading-relaxed">
-                              {member.role}
-                            </p>
-                          </div>
+                        <div>
+                          <h4 className="text-3xl font-black text-white mb-2">
+                            {member.name}
+                          </h4>
+                          <p className="text-gold-500 text-lg font-medium leading-relaxed">
+                            {member.role}
+                          </p>
                         </div>
                       </div>
                     ))
@@ -324,29 +304,16 @@ export default function AboutUsPage() {
                     delay={0.1 * index}
                     variant="fadeUp">
                     <div className="group relative">
-                      <div className="relative mb-8 overflow-hidden rounded-[2.5rem] aspect-[1/1.2] shadow-premium group-hover:shadow-glow-gold transition-all duration-500 border-4 border-white">
-                        <img
-                          src={member.imageUrl}
-                          alt={member.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0b121e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                        {/* Social Overlay Placeholder */}
-                        <div className="absolute top-6 left-6 flex flex-col gap-3 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                          <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 text-white hover:bg-gold-500 hover:text-navy-900 transition-colors cursor-pointer">
-                            <Users className="w-5 h-5" />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <h3 className="text-2xl font-black text-navy-900 mb-2 group-hover:text-gold-500 transition-colors">
+                      <div className="bg-white rounded-[2rem] p-8 shadow-elegant hover:shadow-premium transition-all duration-500 border border-gray-100 text-center h-full flex flex-col justify-center min-h-[160px]">
+                        <h3 className="text-2xl font-black text-navy-900 mb-4 group-hover:text-gold-500 transition-colors">
                           {member.name}
                         </h3>
                         {member.role && (
-                          <span className="text-gold-600 text-xs font-black uppercase tracking-widest bg-gold-50 px-4 py-1.5 rounded-full border border-gold-100">
-                            {member.role}
-                          </span>
+                          <div>
+                            <span className="text-gold-600 text-[10px] font-black uppercase tracking-widest bg-gold-50 px-4 py-1.5 rounded-full border border-gold-100">
+                              {member.role}
+                            </span>
+                          </div>
                         )}
                       </div>
                     </div>
