@@ -158,7 +158,7 @@ const hospitalsData = [
         working_hours: '24 ساعة',
         technologies: ['زراعة كلى', 'غسيل كلوي', 'مناظير مسالك'],
         phone: '050 2262222',
-        website: 'https://unc.mans.edu.eg',
+        website: 'https://www.unc.edu.eg/ar/contact-us',
       },
       {
         name: 'معهد تيودور بلهارس للأبحاث',
@@ -181,7 +181,7 @@ const hospitalsData = [
         working_hours: '24 ساعة',
         technologies: ['حضانات', 'عمليات قيصرية', 'متابعة حمل'],
         phone: '02 23315486',
-        website: 'http://galaa.hi.gov.eg',
+        website: 'https://galaahp.gov.eg/',
       },
       {
         name: 'مستشفى النساء والتوليد بجامعة عين شمس',
@@ -204,7 +204,7 @@ const hospitalsData = [
         working_hours: 'صباحي',
         technologies: ['ليزر جلدي', 'علاج أمراض جلدية مزمنة', 'تحاليل جلدية'],
         phone: '02 23901614',
-        website: '',
+        website: 'https://www.facebook.com/alhaudalmarsoudhospital/',
       },
     ],
   },
